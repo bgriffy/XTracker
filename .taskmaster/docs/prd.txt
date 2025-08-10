@@ -1,0 +1,102 @@
+<context>
+# Overview  
+XTracker is a modern workout tracking app specifically tailored for the P90X program. It improves upon existing solutions like "Total90" by providing a cleaner, more intuitive interface and a streamlined logging experience.  
+It is designed for fitness enthusiasts following P90X who want an easy way to log workouts, track progress, and view performance trends.  
+Value proposition: eliminate friction in daily workout logging, motivate users through clear progress visualization, and provide accurate history for program adherence.
+
+# Core Features  
+- **Workout Logging**  
+  Allows users to record completed P90X workouts with details like date, workout type, duration, and notes.  
+  *Importance*: Accurate history for accountability and program completion.  
+  *How*: Feature-level API endpoints in .NET backend store entries in Postgres, accessible via a React/Next.js frontend.
+
+- **Program Schedule View**  
+  Displays the full 90-day P90X schedule in a calendar-like view with completed workouts marked.  
+  *Importance*: Helps users visualize progress and see upcoming workouts.  
+  *How*: Predefined schedule data + workout log data combined in the frontend.
+
+- **Progress Tracking & Stats**  
+  Shows weekly/monthly stats, completed workout count, and streaks.  
+  *Importance*: Motivation and long-term adherence.  
+  *How*: Aggregated data fetched from API, rendered in charts.
+
+- **Notes & Performance Metrics**  
+  Each workout entry can store notes, reps, weights, and modifications.  
+  *Importance*: Personalization and tracking improvement over time.  
+  *How*: Additional fields in the workout data model, displayed on detail screens.
+
+# User Experience  
+**Personas**:  
+- **Dedicated P90X User** – wants detailed tracking & adherence.  
+- **Casual Exerciser** – only cares about completion tracking.  
+
+**Key User Flows**:  
+1. User logs in (future enhancement) or uses app locally for now.  
+2. Opens today’s workout → marks complete → optionally adds notes.  
+3. Views schedule or progress dashboard.  
+
+**UI/UX Considerations**:  
+- Simple, mobile-friendly layout.  
+- Clear workout naming aligned with P90X terminology.  
+- Minimal input friction for logging workouts.
+</context>
+
+<PRD>
+# Technical Architecture  
+- **Frontend**: Next.js (TypeScript, App Router), Tailwind CSS for styling.  
+- **Backend**: .NET 8 Web API using Vertical Slice Architecture (features: Workouts, Schedule, Stats).  
+- **Database**: PostgreSQL (Docker for local dev).  
+- **APIs**: REST endpoints per feature slice (e.g., POST /workouts, GET /stats).  
+- **Hosting**: Future plan for deployment on Vercel (frontend) + Azure or AWS (backend & DB).  
+- **Integrations**: None in MVP.
+
+**Data Models**:  
+Workout:
+```
+id: UUID
+date: DateOnly
+type: string (P90X workout name)
+durationMinutes: int
+notes: string?
+reps: int? 
+weight: decimal?
+createdAt: DateTime
+updatedAt: DateTime
+```
+
+# Development Roadmap  
+
+**MVP Requirements**:  
+- Workout logging CRUD (backend API + frontend UI).  
+- Predefined 90-day P90X schedule display.  
+- Basic progress stats (workouts completed, streaks).  
+- Local dev Postgres with Docker.  
+- Minimal styling & responsive design.
+
+**Future Enhancements**:  
+- User authentication & profiles.  
+- Cloud sync.  
+- Advanced charts/analytics.  
+- Export/import workout history.  
+- Workout reminders & notifications.  
+
+# Logical Dependency Chain  
+1. **Backend foundation** – set up .NET 8 API, Postgres schema, vertical slice folders (Workouts, Schedule, Stats).  
+2. **Frontend scaffold** – Next.js project with Tailwind + Axios API client.  
+3. **Workout logging** – create endpoint & UI form.  
+4. **Schedule view** – render static P90X plan & mark completed workouts from DB.  
+5. **Stats view** – basic aggregation endpoints + simple charts.  
+6. **UI polish** – improve layout, responsive design.  
+7. **Optional auth** – once MVP core works locally.
+
+# Risks and Mitigations  
+- **Scope creep**: Keep MVP limited to logging + basic display.  
+- **Data accuracy**: Use strong validation in API to prevent corrupt entries.  
+- **Performance**: Minimal risk at MVP scale; optimize queries for stats later.  
+- **User adoption**: Provide quick log flow to reduce friction.
+
+# Appendix  
+- **Reference App**: "Total90" – used as baseline for feature inspiration.  
+- **Design Goal**: Lightweight, no overengineering for MVP.  
+- **Tech Stack Decision**: Vertical Slice Architecture for backend to keep features isolated and maintainable.
+</PRD>

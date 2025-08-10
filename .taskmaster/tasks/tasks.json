@@ -1,0 +1,663 @@
+{
+  "master": {
+    "tasks": [
+      {
+        "id": 1,
+        "title": "Setup .NET 8 Backend with Vertical Slice Architecture",
+        "description": "Initialize .NET 8 Web API project with Vertical Slice Architecture, configure PostgreSQL connection, and set up Docker development environment",
+        "details": "1. Create new .NET 8 Web API project\n2. Set up folder structure for vertical slices (Features/Workouts, Features/Schedule, Features/Stats)\n3. Configure PostgreSQL connection using Entity Framework Core\n4. Create Docker compose file for local Postgres instance\n5. Implement basic middleware (error handling, logging)\n6. Set up dependency injection container",
+        "testStrategy": "1. Verify Docker container starts successfully\n2. Test database connection\n3. Validate folder structure follows VSA principles\n4. Unit test middleware components",
+        "priority": "high",
+        "dependencies": [],
+        "status": "completed",
+        "subtasks": []
+      },
+      {
+        "id": 2,
+        "title": "Create Workout Domain Model and Database Schema",
+        "description": "Implement the Workout entity model and create database migration for the core schema",
+        "details": "1. Create Workout entity with specified fields (id, date, type, durationMinutes, notes, reps, weight, timestamps)\n2. Configure Entity Framework mappings\n3. Create initial migration\n4. Add data annotations and validation\n5. Implement repository pattern for data access",
+        "testStrategy": "1. Unit tests for entity validation\n2. Integration tests for repository operations\n3. Verify migration applies successfully\n4. Test CRUD operations through repository",
+        "priority": "high",
+        "dependencies": [
+          1
+        ],
+        "status": "completed",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create Workout Entity Model",
+            "description": "Create the core Workout entity with all required fields and data annotations",
+            "details": "1. Create Workout.cs in Features/Workouts/Models\n2. Add properties: Id (int), Date (DateTime), Type (string), DurationMinutes (int), Notes (string), Reps (int?), Weight (decimal?), CreatedAt (DateTime), UpdatedAt (DateTime)\n3. Add data annotations for validation\n4. Add navigation properties for future relationships",
+            "status": "pending"
+          },
+          {
+            "id": 2,
+            "title": "Create Exercise Entity Model",
+            "description": "Create Exercise entity for tracking individual exercises within workouts",
+            "details": "1. Create Exercise.cs in Features/Workouts/Models\n2. Add properties: Id (int), Name (string), Description (string), Category (string), CreatedAt (DateTime)\n3. Add data annotations and validation\n4. Set up relationship with Workout entity",
+            "status": "pending"
+          },
+          {
+            "id": 3,
+            "title": "Create WorkoutExercise Junction Entity",
+            "description": "Create junction table entity for many-to-many relationship between workouts and exercises",
+            "details": "1. Create WorkoutExercise.cs in Features/Workouts/Models\n2. Add properties: WorkoutId (int), ExerciseId (int), Sets (int), Reps (int), Weight (decimal?), Duration (int?), Notes (string)\n3. Configure composite key\n4. Set up navigation properties",
+            "status": "pending"
+          },
+          {
+            "id": 4,
+            "title": "Configure Entity Framework Mappings",
+            "description": "Configure Entity Framework relationships and constraints in DbContext",
+            "details": "1. Update XTrackerDbContext.OnModelCreating method\n2. Configure Workout entity mapping\n3. Configure Exercise entity mapping\n4. Configure WorkoutExercise junction mapping\n5. Set up foreign key relationships\n6. Configure indexes for performance",
+            "status": "pending"
+          },
+          {
+            "id": 5,
+            "title": "Add Data Annotations and Validation",
+            "description": "Implement comprehensive validation using data annotations and custom validation",
+            "details": "1. Add Required attributes to mandatory fields\n2. Add StringLength constraints\n3. Add Range validations for numeric fields\n4. Add custom validation attributes if needed\n5. Configure validation error messages",
+            "status": "pending"
+          },
+          {
+            "id": 6,
+            "title": "Create Initial Database Migration",
+            "description": "Generate and configure the initial database migration",
+            "details": "1. Run 'dotnet ef migrations add InitialWorkoutSchema'\n2. Review generated migration file\n3. Verify table structure and relationships\n4. Add any custom migration logic if needed\n5. Test migration generation",
+            "status": "pending"
+          },
+          {
+            "id": 7,
+            "title": "Implement Repository Pattern",
+            "description": "Create repository interfaces and implementations for data access",
+            "details": "1. Create IWorkoutRepository interface\n2. Create IExerciseRepository interface\n3. Create WorkoutRepository implementation\n4. Create ExerciseRepository implementation\n5. Register repositories in DI container\n6. Add basic CRUD operations",
+            "status": "pending"
+          },
+          {
+            "id": 8,
+            "title": "Add Database Seeding",
+            "description": "Create seed data for exercises and initial workout types",
+            "details": "1. Create seed data for common exercises (push-ups, pull-ups, etc.)\n2. Create seed data for P90X workout types\n3. Implement seeding logic in DbContext\n4. Add seeding method to Program.cs\n5. Test seed data creation",
+            "status": "pending"
+          },
+          {
+            "id": 9,
+            "title": "Test Database Schema and Operations",
+            "description": "Verify the database schema works correctly and test basic operations",
+            "details": "1. Apply migration to database\n2. Test entity creation and persistence\n3. Test relationship queries\n4. Test validation rules\n5. Verify seed data was created\n6. Test repository operations",
+            "status": "pending"
+          },
+          {
+            "id": 10,
+            "title": "Update Health Check for Database",
+            "description": "Enhance health check endpoint to verify database schema",
+            "details": "1. Update HealthController to check for required tables\n2. Add schema validation logic\n3. Test health check with database\n4. Verify proper error handling for missing tables",
+            "status": "pending"
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "title": "Implement Workout API Endpoints",
+        "description": "Create REST endpoints for workout CRUD operations using Vertical Slice Architecture",
+        "details": "1. Implement endpoints: POST /workouts, GET /workouts, GET /workouts/{id}, PUT /workouts/{id}, DELETE /workouts/{id}\n2. Create request/response DTOs\n3. Implement validation using FluentValidation\n4. Add mapping profiles using AutoMapper\n5. Implement feature handlers following CQRS pattern",
+        "testStrategy": "1. Integration tests for each endpoint\n2. Validation testing for request DTOs\n3. Test error handling scenarios\n4. Performance testing for basic load",
+        "priority": "high",
+        "dependencies": [
+          2
+        ],
+        "status": "completed",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create Request/Response DTOs for Workout API",
+            "description": "Define data transfer objects for all workout endpoints including creation, retrieval, update, and deletion operations",
+            "dependencies": [],
+            "details": "Create WorkoutCreateDto, WorkoutUpdateDto, WorkoutResponseDto, and WorkoutListResponseDto classes with appropriate properties matching the domain model. Include pagination parameters for list endpoint.",
+            "status": "pending",
+            "testStrategy": "Unit test DTOs for proper serialization/deserialization and property validation"
+          },
+          {
+            "id": 2,
+            "title": "Implement FluentValidation for Workout DTOs",
+            "description": "Create validation rules for all workout request DTOs using FluentValidation library",
+            "dependencies": [
+              "3.1"
+            ],
+            "details": "Create WorkoutCreateDtoValidator and WorkoutUpdateDtoValidator classes with appropriate validation rules for required fields, string lengths, numeric ranges, and date validations. Register validators in DI container.",
+            "status": "pending",
+            "testStrategy": "Unit test validators with valid and invalid data scenarios to ensure rules are properly enforced"
+          },
+          {
+            "id": 3,
+            "title": "Configure AutoMapper Profiles for Workout Entities",
+            "description": "Create mapping profiles between domain entities and DTOs for the workout feature",
+            "dependencies": [
+              "3.1"
+            ],
+            "details": "Create WorkoutMappingProfile class inheriting from Profile. Define bidirectional mappings between Workout entity and DTOs. Handle nested object mappings and collection mappings if needed.",
+            "status": "pending",
+            "testStrategy": "Unit test mapping configurations to ensure proper transformation between entities and DTOs"
+          },
+          {
+            "id": 4,
+            "title": "Implement CQRS Handlers for Workout Operations",
+            "description": "Create command and query handlers for all workout CRUD operations following Vertical Slice Architecture",
+            "dependencies": [
+              "3.1",
+              "3.2",
+              "3.3"
+            ],
+            "details": "Create CreateWorkoutCommand, GetWorkoutsQuery, GetWorkoutByIdQuery, UpdateWorkoutCommand, and DeleteWorkoutCommand classes with corresponding handlers. Implement business logic, validation, and persistence operations in each handler.",
+            "status": "pending",
+            "testStrategy": "Unit test handlers with mocked dependencies to verify business logic. Integration test handlers with test database to verify persistence operations."
+          },
+          {
+            "id": 5,
+            "title": "Create REST API Controllers for Workout Endpoints",
+            "description": "Implement API controller with endpoints for workout CRUD operations",
+            "dependencies": [
+              "3.4"
+            ],
+            "details": "Create WorkoutsController with POST, GET (list), GET (by id), PUT, and DELETE actions. Use MediatR to dispatch commands and queries to appropriate handlers. Implement proper HTTP status codes, response formatting, and error handling.",
+            "status": "pending",
+            "testStrategy": "Integration tests for each endpoint verifying correct status codes, response formats, and error handling. Test authorization if applicable."
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "title": "Setup Next.js Frontend with Tailwind",
+        "description": "Initialize Next.js project with TypeScript, configure Tailwind CSS, and set up API client",
+        "details": "1. Create Next.js project using App Router\n2. Configure TypeScript\n3. Install and configure Tailwind CSS\n4. Set up Axios client for API communication\n5. Create basic layout components\n6. Configure environment variables",
+        "testStrategy": "1. Verify TypeScript compilation\n2. Test Tailwind configuration\n3. Unit test API client setup\n4. Test responsive layout components",
+        "priority": "high",
+        "dependencies": [],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Initialize Next.js project with TypeScript",
+            "description": "Create a new Next.js project using the App Router architecture and configure TypeScript for type safety",
+            "dependencies": [],
+            "details": "1. Use create-next-app to initialize a new project\n2. Select TypeScript during setup\n3. Choose App Router architecture\n4. Configure tsconfig.json with strict type checking\n5. Set up folder structure following Next.js 13+ conventions",
+            "status": "pending",
+            "testStrategy": "Verify TypeScript compilation works without errors and test basic page rendering"
+          },
+          {
+            "id": 2,
+            "title": "Install and configure Tailwind CSS",
+            "description": "Set up Tailwind CSS for styling with proper configuration for the Next.js project",
+            "dependencies": [
+              "4.1"
+            ],
+            "details": "1. Install Tailwind CSS, PostCSS, and autoprefixer\n2. Create tailwind.config.js and postcss.config.js\n3. Configure content paths for Tailwind\n4. Set up global CSS file with Tailwind directives\n5. Create theme customizations for the fitness app",
+            "status": "pending",
+            "testStrategy": "Verify Tailwind classes are working properly by creating a test component with various utility classes"
+          },
+          {
+            "id": 3,
+            "title": "Set up Axios client for API communication",
+            "description": "Configure Axios for making API requests to the backend with proper error handling and interceptors",
+            "dependencies": [
+              "4.1"
+            ],
+            "details": "1. Install Axios package\n2. Create API client with base URL configuration\n3. Set up request/response interceptors\n4. Implement error handling middleware\n5. Create typed API service functions for workout endpoints",
+            "status": "pending",
+            "testStrategy": "Unit test API client setup with mock requests and responses, verify error handling works correctly"
+          },
+          {
+            "id": 4,
+            "title": "Create basic layout components",
+            "description": "Develop reusable layout components that will be used throughout the application",
+            "dependencies": [
+              "4.2"
+            ],
+            "details": "1. Create layout component with header, footer, and main content area\n2. Implement responsive navigation menu\n3. Design sidebar for workout categories\n4. Create loading and error state components\n5. Implement common UI components (buttons, cards, inputs)",
+            "status": "pending",
+            "testStrategy": "Test responsive behavior across different screen sizes and verify components render correctly in various states"
+          },
+          {
+            "id": 5,
+            "title": "Configure environment variables and deployment setup",
+            "description": "Set up environment configuration and prepare the application for different deployment environments",
+            "dependencies": [
+              "4.1",
+              "4.3"
+            ],
+            "details": "1. Create .env.local file for local development\n2. Set up .env.example with required variables\n3. Configure API URL for different environments\n4. Set up Next.js config file with environment-specific settings\n5. Document environment setup process for team members",
+            "status": "pending",
+            "testStrategy": "Verify application loads correctly with different environment configurations and test environment variable access"
+          }
+        ]
+      },
+      {
+        "id": 5,
+        "title": "Implement Workout Logging UI",
+        "description": "Create workout logging form and list view components",
+        "details": "1. Create workout form component with all required fields\n2. Implement form validation using React Hook Form\n3. Add workout list view with filtering options\n4. Implement optimistic updates\n5. Add loading and error states\n6. Ensure mobile-friendly layout",
+        "testStrategy": "1. Unit tests for form validation\n2. Integration tests for API communication\n3. E2E tests for workout logging flow\n4. Test responsive design across devices",
+        "priority": "high",
+        "dependencies": [
+          3,
+          4
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create Workout Form Component",
+            "description": "Develop a form component with all required fields for logging workouts",
+            "dependencies": [],
+            "details": "Implement a React form component with fields for workout date, type, duration, notes, sets, reps, and weight. Use React Hook Form for state management. Ensure proper field types (date picker, dropdowns, number inputs) and organize layout logically.",
+            "status": "pending",
+            "testStrategy": "Write unit tests for form rendering and field validation. Test form submission with mock data. Verify all required fields are present."
+          },
+          {
+            "id": 2,
+            "title": "Implement Form Validation",
+            "description": "Add validation rules to the workout form using React Hook Form",
+            "dependencies": [
+              "5.1"
+            ],
+            "details": "Configure validation rules for all form fields (required fields, min/max values, date constraints). Implement error messages and visual feedback for validation errors. Add client-side validation before submission. Create custom validation rules for workout-specific constraints.",
+            "status": "pending",
+            "testStrategy": "Test validation rules with valid and invalid inputs. Verify error messages display correctly. Test form submission with invalid data is prevented."
+          },
+          {
+            "id": 3,
+            "title": "Create Workout List View with Filtering",
+            "description": "Develop a component to display logged workouts with filtering capabilities",
+            "dependencies": [],
+            "details": "Create a responsive list/table view of workouts showing key information (date, type, duration). Implement filtering by date range, workout type, and other relevant criteria. Add sorting functionality (newest/oldest, duration, etc.). Include pagination for large datasets.",
+            "status": "pending",
+            "testStrategy": "Test list rendering with mock workout data. Verify filters correctly modify displayed workouts. Test pagination and sorting functionality."
+          },
+          {
+            "id": 4,
+            "title": "Implement API Integration with Optimistic Updates",
+            "description": "Connect UI components to API endpoints with optimistic UI updates",
+            "dependencies": [
+              "5.1",
+              "5.2",
+              "5.3"
+            ],
+            "details": "Integrate form submission with workout API endpoints. Implement optimistic updates for immediate UI feedback. Handle API errors gracefully with rollback capability. Add loading indicators during API operations while maintaining UI responsiveness.",
+            "status": "pending",
+            "testStrategy": "Test API integration with mock services. Verify optimistic updates work correctly. Test error handling and rollback functionality. Measure performance impact."
+          },
+          {
+            "id": 5,
+            "title": "Ensure Mobile-Friendly Layout and Polish UI",
+            "description": "Optimize UI components for mobile devices and add loading/error states",
+            "dependencies": [
+              "5.1",
+              "5.2",
+              "5.3",
+              "5.4"
+            ],
+            "details": "Implement responsive design for all components using CSS flexbox/grid. Add loading states and skeletons for data fetching operations. Create error state components with retry options. Test and optimize touch interactions for mobile users. Ensure proper form usability on small screens.",
+            "status": "pending",
+            "testStrategy": "Test responsive layout across different device sizes. Verify loading and error states display correctly. Conduct usability testing on mobile devices. Test touch interactions and form submission on mobile browsers."
+          }
+        ]
+      },
+      {
+        "id": 6,
+        "title": "Develop P90X Schedule Feature",
+        "description": "Implement the 90-day program schedule view with completed workout markers",
+        "details": "1. Create static P90X schedule data structure\n2. Implement calendar-like view component\n3. Add completed workout indicators\n4. Create schedule API endpoint\n5. Implement schedule state management\n6. Add week/month navigation",
+        "testStrategy": "1. Unit tests for schedule logic\n2. Integration tests for schedule API\n3. Visual regression tests for calendar view\n4. Test schedule navigation and filters",
+        "priority": "medium",
+        "dependencies": [
+          3,
+          4
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create P90X Schedule Data Structure",
+            "description": "Design and implement the static data structure to represent the 90-day P90X workout program schedule",
+            "dependencies": [],
+            "details": "Define JSON schema for workout schedule including workout types, rest days, and program phases. Create static data file with all 90 days of the P90X program. Include metadata for each workout such as duration, difficulty, and category.",
+            "status": "pending",
+            "testStrategy": "Unit test the data structure for completeness and accuracy. Validate all 90 days are properly represented. Ensure all workout metadata is correctly formatted."
+          },
+          {
+            "id": 2,
+            "title": "Implement Calendar-like View Component",
+            "description": "Develop a responsive calendar component to display the 90-day P90X schedule",
+            "dependencies": [
+              "6.1"
+            ],
+            "details": "Create React component for calendar view with day, week, and month display options. Implement responsive grid layout using Tailwind CSS. Add visual indicators for different workout types. Ensure accessibility compliance for calendar navigation.",
+            "status": "pending",
+            "testStrategy": "Create component tests for rendering accuracy. Test responsive behavior across device sizes. Verify keyboard navigation works correctly. Conduct visual regression tests."
+          },
+          {
+            "id": 3,
+            "title": "Add Completed Workout Indicators",
+            "description": "Implement visual indicators and state management for tracking completed workouts",
+            "dependencies": [
+              "6.2"
+            ],
+            "details": "Add completion status toggle to each workout in the calendar. Create visual indicators (checkmarks, color changes) for completed workouts. Implement click/tap interaction to mark workouts as complete or incomplete. Store completion state in local state management.",
+            "status": "pending",
+            "testStrategy": "Test toggle functionality for marking workouts complete/incomplete. Verify visual indicators appear correctly. Test persistence of completion status across page refreshes."
+          },
+          {
+            "id": 4,
+            "title": "Create Schedule API Endpoint",
+            "description": "Develop backend API endpoints for retrieving and updating the P90X schedule",
+            "dependencies": [
+              "6.1"
+            ],
+            "details": "Implement GET /schedule endpoint to retrieve full or filtered schedule. Create POST /schedule/completed endpoint to update workout completion status. Add query parameters for date range filtering. Implement caching for schedule data to improve performance.",
+            "status": "pending",
+            "testStrategy": "Write integration tests for all schedule endpoints. Test filtering capabilities with various parameters. Verify completion status updates correctly. Test error handling for invalid requests."
+          },
+          {
+            "id": 5,
+            "title": "Implement Schedule Navigation and State Management",
+            "description": "Add navigation controls and state management for the schedule view",
+            "dependencies": [
+              "6.2",
+              "6.3",
+              "6.4"
+            ],
+            "details": "Create week/month navigation controls with date selection. Implement state management using React context or Redux. Add filters for viewing only specific workout types. Synchronize UI state with API data. Implement progress tracking showing completion percentage.",
+            "status": "pending",
+            "testStrategy": "Test navigation between different time periods. Verify filters correctly display subset of workouts. Test state synchronization between UI and API. Verify progress calculations are accurate."
+          }
+        ]
+      },
+      {
+        "id": 7,
+        "title": "Implement Stats and Progress Tracking",
+        "description": "Create endpoints and UI for workout statistics and progress visualization",
+        "details": "1. Implement stats calculation logic (completed workouts, streaks)\n2. Create stats API endpoints\n3. Add chart components using a charting library\n4. Implement stats dashboard UI\n5. Add weekly/monthly aggregation",
+        "testStrategy": "1. Unit tests for stats calculations\n2. Integration tests for stats endpoints\n3. Visual testing for charts\n4. Performance testing for data aggregation",
+        "priority": "medium",
+        "dependencies": [
+          3,
+          4
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Implement Stats Calculation Logic",
+            "description": "Create backend logic to calculate workout statistics including completed workouts, streaks, and other performance metrics",
+            "dependencies": [],
+            "details": "Develop service classes for calculating various statistics from workout data, including completed workout counts, active streaks, personal records, and progress over time. Implement business logic for determining streaks based on workout frequency.",
+            "status": "pending",
+            "testStrategy": "Write unit tests for each calculation method, test edge cases like streak breaks, and verify calculations against sample workout datasets"
+          },
+          {
+            "id": 2,
+            "title": "Create Stats API Endpoints",
+            "description": "Develop REST API endpoints to expose workout statistics data to the frontend",
+            "dependencies": [
+              "7.1"
+            ],
+            "details": "Implement endpoints for: GET /stats/summary, GET /stats/streaks, GET /stats/progress, GET /stats/history. Create DTOs for each response type and implement proper error handling for missing data scenarios.",
+            "status": "pending",
+            "testStrategy": "Create integration tests for each endpoint, verify correct data aggregation, test performance with larger datasets, and validate error responses"
+          },
+          {
+            "id": 3,
+            "title": "Implement Data Aggregation Logic",
+            "description": "Create backend services for weekly and monthly data aggregation to support trend visualization",
+            "dependencies": [
+              "7.1",
+              "7.2"
+            ],
+            "details": "Develop aggregation logic to group workout data by week and month. Implement caching strategies for frequently accessed aggregated data. Create methods for calculating trends and comparing periods.",
+            "status": "pending",
+            "testStrategy": "Test aggregation accuracy with various date ranges, verify performance with large datasets, and ensure correct handling of timezone differences"
+          },
+          {
+            "id": 4,
+            "title": "Add Chart Components",
+            "description": "Integrate a charting library and create reusable chart components for visualizing workout data",
+            "dependencies": [
+              "7.2",
+              "7.3"
+            ],
+            "details": "Select and integrate a React-compatible charting library (e.g., Chart.js, Recharts). Create reusable components for line charts, bar charts, and progress indicators. Implement responsive design for charts on different screen sizes.",
+            "status": "pending",
+            "testStrategy": "Test chart rendering with various data inputs, verify responsive behavior, and ensure accessibility compliance for data visualization"
+          },
+          {
+            "id": 5,
+            "title": "Implement Stats Dashboard UI",
+            "description": "Create a comprehensive dashboard UI that displays all statistics and progress visualizations",
+            "dependencies": [
+              "7.4"
+            ],
+            "details": "Design and implement a dashboard layout with sections for summary statistics, streak information, progress charts, and historical comparisons. Add filters for time periods and workout types. Ensure mobile-friendly design with appropriate layout adjustments.",
+            "status": "pending",
+            "testStrategy": "Conduct usability testing for the dashboard, verify all charts display correctly, test filter functionality, and ensure responsive behavior across devices"
+          }
+        ]
+      },
+      {
+        "id": 8,
+        "title": "Add Workout Details and Notes Feature",
+        "description": "Implement detailed workout view with performance metrics and notes",
+        "details": "1. Create workout detail view component\n2. Implement reps and weight tracking UI\n3. Add notes editor component\n4. Create workout history view\n5. Implement performance tracking features",
+        "testStrategy": "1. Unit tests for metrics calculations\n2. Integration tests for notes persistence\n3. E2E tests for workout detail flow\n4. Usability testing for input mechanisms",
+        "priority": "medium",
+        "dependencies": [
+          5
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create Workout Detail View Component",
+            "description": "Develop a comprehensive UI component that displays all workout details including exercise information, sets, reps, and weights",
+            "dependencies": [],
+            "details": "Implement a responsive React component that displays workout metadata (date, type, duration) and exercise details. Include proper layout for mobile and desktop views. Use styled-components for styling and ensure accessibility compliance.",
+            "status": "pending",
+            "testStrategy": "Write unit tests using React Testing Library to verify component rendering. Test responsive behavior across different viewport sizes. Verify all workout data is properly displayed."
+          },
+          {
+            "id": 2,
+            "title": "Implement Reps and Weight Tracking UI",
+            "description": "Create interactive UI elements for tracking repetitions and weights for each exercise in a workout",
+            "dependencies": [
+              "8.1"
+            ],
+            "details": "Build form controls for inputting reps and weights with validation. Implement increment/decrement buttons for quick adjustments. Add visual indicators for personal records. Ensure data is properly formatted and validated before submission.",
+            "status": "pending",
+            "testStrategy": "Test input validation for numeric values. Verify increment/decrement functionality works correctly. Test form submission with various input combinations. Ensure personal record indicators display correctly."
+          },
+          {
+            "id": 3,
+            "title": "Add Notes Editor Component",
+            "description": "Implement a rich text editor for adding and editing workout notes with formatting options",
+            "dependencies": [
+              "8.1"
+            ],
+            "details": "Integrate a lightweight rich text editor (like Quill or Draft.js) for workout notes. Include basic formatting options (bold, italic, bullet points). Implement auto-save functionality. Ensure proper sanitization of user input to prevent XSS attacks.",
+            "status": "pending",
+            "testStrategy": "Test text formatting options work correctly. Verify auto-save functionality with simulated typing events. Test input sanitization for security vulnerabilities. Ensure notes persist correctly when navigating away and back."
+          },
+          {
+            "id": 4,
+            "title": "Create Workout History View",
+            "description": "Develop a historical view of past workouts with filtering and sorting capabilities",
+            "dependencies": [
+              "8.1"
+            ],
+            "details": "Implement a paginated list view of past workouts with date range filters. Add sorting options by date, workout type, and duration. Include search functionality for finding specific workouts. Create a calendar view option for visualizing workout frequency.",
+            "status": "pending",
+            "testStrategy": "Test pagination controls and verify correct number of items per page. Verify filters and sorting work as expected. Test search functionality with various queries. Ensure calendar view correctly highlights workout days."
+          },
+          {
+            "id": 5,
+            "title": "Implement Performance Tracking Features",
+            "description": "Add visualization and metrics for tracking workout performance over time",
+            "dependencies": [
+              "8.2",
+              "8.4"
+            ],
+            "details": "Create charts and graphs (using Chart.js or D3.js) to visualize performance trends. Implement metrics calculations for personal records, volume, and intensity. Add progress indicators comparing current performance to previous workouts. Ensure visualizations are responsive and accessible.",
+            "status": "pending",
+            "testStrategy": "Test metric calculations with various workout data scenarios. Verify charts render correctly with different data sets. Test responsive behavior of visualizations. Ensure accessibility features work with screen readers."
+          }
+        ]
+      },
+      {
+        "id": 9,
+        "title": "Implement Responsive Design and UI Polish",
+        "description": "Enhance UI/UX with responsive design and styling improvements",
+        "details": "1. Implement responsive layouts for all components\n2. Add loading states and animations\n3. Improve error handling UI\n4. Implement dark/light mode\n5. Add accessibility features\n6. Optimize for mobile devices",
+        "testStrategy": "1. Cross-browser testing\n2. Responsive design testing\n3. Accessibility audit\n4. Performance testing on mobile devices",
+        "priority": "low",
+        "dependencies": [
+          5,
+          6,
+          7,
+          8
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Implement Responsive Layouts",
+            "description": "Create responsive layouts for all components using CSS Grid and Flexbox",
+            "dependencies": [],
+            "details": "1. Audit all existing components for responsiveness\n2. Implement CSS Grid for page layouts\n3. Use Flexbox for component layouts\n4. Add media queries for breakpoints (mobile, tablet, desktop)\n5. Test layouts across different screen sizes",
+            "status": "pending",
+            "testStrategy": "1. Test on multiple devices (phones, tablets, desktops)\n2. Verify layout integrity at standard breakpoints (320px, 768px, 1024px, 1440px)\n3. Use browser dev tools to simulate different screen sizes"
+          },
+          {
+            "id": 2,
+            "title": "Add Loading States and Animations",
+            "description": "Implement loading indicators, transitions, and animations to improve user experience",
+            "dependencies": [
+              "9.1"
+            ],
+            "details": "1. Create reusable loading components (spinners, skeletons)\n2. Add loading states to data fetching operations\n3. Implement transition animations for page changes\n4. Add micro-interactions for buttons and interactive elements\n5. Ensure animations are performant on mobile devices",
+            "status": "pending",
+            "testStrategy": "1. Test loading states with simulated network delays\n2. Verify animations work across browsers\n3. Measure performance impact using Chrome DevTools\n4. Ensure animations respect reduced motion preferences"
+          },
+          {
+            "id": 3,
+            "title": "Implement Dark/Light Mode",
+            "description": "Create a theme system with dark and light mode support and user preference detection",
+            "dependencies": [
+              "9.1"
+            ],
+            "details": "1. Define color variables for both themes\n2. Create theme context and provider\n3. Implement theme toggle component\n4. Add system preference detection\n5. Persist user theme preference in local storage\n6. Ensure all components respect theme colors",
+            "status": "pending",
+            "testStrategy": "1. Test theme switching functionality\n2. Verify system preference detection\n3. Check persistence across page reloads\n4. Ensure sufficient contrast ratios for accessibility"
+          },
+          {
+            "id": 4,
+            "title": "Enhance Error Handling UI",
+            "description": "Improve error presentation and recovery options throughout the application",
+            "dependencies": [
+              "9.2"
+            ],
+            "details": "1. Design consistent error message components\n2. Implement toast notifications for transient errors\n3. Create error boundary components for React rendering errors\n4. Add retry mechanisms for failed API requests\n5. Improve form validation error displays",
+            "status": "pending",
+            "testStrategy": "1. Test error handling with mocked API failures\n2. Verify error boundaries catch rendering issues\n3. Test error recovery mechanisms\n4. Ensure error messages are clear and actionable"
+          },
+          {
+            "id": 5,
+            "title": "Implement Accessibility Features",
+            "description": "Enhance application accessibility following WCAG 2.1 AA standards",
+            "dependencies": [
+              "9.1",
+              "9.3",
+              "9.4"
+            ],
+            "details": "1. Add proper ARIA attributes to all components\n2. Ensure keyboard navigation throughout the app\n3. Implement focus management\n4. Add screen reader support\n5. Ensure sufficient color contrast\n6. Test with assistive technologies",
+            "status": "pending",
+            "testStrategy": "1. Run automated accessibility audits (Lighthouse, axe)\n2. Test with screen readers (NVDA, VoiceOver)\n3. Verify keyboard navigation\n4. Conduct manual WCAG 2.1 AA compliance checks"
+          }
+        ]
+      },
+      {
+        "id": 10,
+        "title": "Setup Local Development Environment",
+        "description": "Create development environment setup documentation and scripts",
+        "details": "1. Create Docker Compose file for full stack\n2. Write setup documentation\n3. Create development scripts\n4. Add sample data seeding\n5. Configure debugging tools\n6. Add development utilities",
+        "testStrategy": "1. Test environment setup on clean machine\n2. Verify all components start correctly\n3. Test sample data seeding\n4. Validate debugging configuration",
+        "priority": "medium",
+        "dependencies": [
+          1,
+          4
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create Docker Compose file for full stack",
+            "description": "Develop a comprehensive Docker Compose configuration that includes all necessary services for the development environment",
+            "dependencies": [],
+            "details": "Create a docker-compose.yml file that includes services for PostgreSQL database, .NET backend, and React frontend. Configure appropriate network settings, volume mounts, and environment variables. Ensure hot-reload capabilities for development.",
+            "status": "pending",
+            "testStrategy": "Verify all containers start successfully with 'docker-compose up'. Test network connectivity between services. Validate persistence of data across container restarts."
+          },
+          {
+            "id": 2,
+            "title": "Write setup documentation",
+            "description": "Create comprehensive documentation for setting up the local development environment",
+            "dependencies": [
+              "10.1"
+            ],
+            "details": "Write markdown documentation covering prerequisites (Docker, Git, etc.), step-by-step setup instructions, troubleshooting common issues, and environment configuration options. Include screenshots where helpful and document all environment variables.",
+            "status": "pending",
+            "testStrategy": "Have a team member follow the documentation on a clean machine to verify completeness and accuracy. Collect feedback and refine documentation."
+          },
+          {
+            "id": 3,
+            "title": "Create development scripts",
+            "description": "Develop utility scripts to automate common development tasks",
+            "dependencies": [
+              "10.1"
+            ],
+            "details": "Create shell scripts (and batch files for Windows) that automate tasks like starting the environment, rebuilding containers, running migrations, clearing caches, and running tests. Include a script for initializing a new developer environment from scratch.",
+            "status": "pending",
+            "testStrategy": "Test each script on both Linux/Mac and Windows environments. Verify scripts handle error conditions gracefully."
+          },
+          {
+            "id": 4,
+            "title": "Implement sample data seeding",
+            "description": "Create mechanisms to populate the development database with realistic sample data",
+            "dependencies": [
+              "10.1",
+              "10.3"
+            ],
+            "details": "Develop database seeders for P90X workouts, schedules, and user progress data. Create a script that can reset and repopulate the database with sample data. Include different user profiles with varying progress through the program.",
+            "status": "pending",
+            "testStrategy": "Verify all required entities are seeded correctly. Test the reset functionality. Ensure seeded data represents realistic usage patterns."
+          },
+          {
+            "id": 5,
+            "title": "Configure debugging tools and development utilities",
+            "description": "Set up debugging configurations and additional development utilities",
+            "dependencies": [
+              "10.1",
+              "10.2",
+              "10.3"
+            ],
+            "details": "Configure VS Code and Visual Studio debugging settings for both backend and frontend. Set up browser developer tools extensions. Add logging utilities, performance monitoring, and API documentation tools like Swagger. Include linting and code formatting configurations.",
+            "status": "pending",
+            "testStrategy": "Test debugging configurations by setting breakpoints and stepping through code. Verify all development utilities function as expected. Test API documentation for completeness."
+          }
+        ]
+      }
+    ],
+    "metadata": {
+      "created": "2025-08-10T18:29:31.112Z",
+      "updated": "2025-08-10T18:29:31.113Z",
+      "description": "Tasks for master context"
+    }
+  }
+}
