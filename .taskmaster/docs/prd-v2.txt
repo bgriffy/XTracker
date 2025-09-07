@@ -1,0 +1,1202 @@
+<context>
+# Overview  
+XTracker is a comprehensive P90X workout tracking application that provides a complete fitness management system. The application follows a sophisticated workflow with multiple interconnected pages, each serving specific user needs in the fitness journey.
+
+**Core Value Proposition**: 
+- Streamlined workout logging with minimal friction
+- Comprehensive template management system
+- Advanced scheduling and progress tracking
+- Mobile-first design for gym use
+- Template versioning and customization capabilities
+
+**Target Users**:
+- **Dedicated P90X Users**: Want detailed tracking, template customization, and program adherence
+- **Fitness Enthusiasts**: Need flexible workout management with custom templates
+- **Mobile-First Users**: Require touch-friendly interfaces for gym environments
+
+# Current Implementation Status
+
+## ✅ Already Implemented
+
+### Backend Foundation
+- **.NET 8 Web API** with Vertical Slice Architecture
+- **PostgreSQL Database** with Entity Framework Core
+- **Comprehensive Data Models**:
+  - `Workout` - Individual workout sessions with date, type, duration, notes, reps, weight
+  - `Exercise` - Exercise library with name, description, category, difficulty, muscle groups, equipment
+  - `WorkoutExercise` - Junction table linking workouts to exercises with sets, reps, weight, duration
+  - `WorkoutTemplate` - Template definitions with name, description, category, difficulty, duration, equipment
+  - `WorkoutTemplateSection` - Template sections with name, type, order, instructions, rest periods
+  - `WorkoutTemplateExercise` - Template exercises with sets, reps, weight, duration, rest periods
+- **P90X Exercise Database**: 100+ exercises with comprehensive metadata
+- **P90X Workout Templates**: Chest & Back, Shoulders & Arms, Legs & Back, Plyometrics, Yoga X, etc.
+- **Database Seeding**: Automated seeding with P90X data via SeedingService
+
+### Backend API Controllers & Endpoints
+- **WorkoutTemplatesController** (`/api/workouttemplates`):
+  - `GET /` - Get all workout templates
+  - `GET /{id}` - Get specific template with full details
+  - `GET /p90x` - Get P90X-specific templates
+  - `GET /category/{category}` - Get templates by category
+- **WorkoutsController** (`/api/workouts`):
+  - `POST /` - Create new workout
+  - `GET /` - Get workouts with pagination and filtering
+  - `GET /{id}` - Get specific workout
+  - `PUT /{id}` - Update workout
+  - `DELETE /{id}` - Delete workout
+- **HealthController** (`/api/health`):
+  - `GET /` - Health check with database connectivity
+- **SeedingController** (`/api/seeding`):
+  - `POST /seed` - Seed database
+  - `POST /reseed` - Reseed database
+  - `GET /status` - Check seeding status
+- **TemplateValidationController** (`/api/templatevalidation`):
+  - `POST /validate-template` - Validate workout template
+  - `POST /validate-section` - Validate template section
+  - `POST /validate-exercise` - Validate template exercise
+  - `POST /validate-structure` - Validate workout structure
+  - `POST /validate-p90x` - Validate P90X requirements
+  - `POST /suggestions` - Get validation suggestions
+  - `POST /validate-consistency` - Validate multiple templates
+  - `GET /error-types` - Get validation error types
+  - `GET /warning-types` - Get validation warning types
+  - `GET /info-types` - Get validation info types
+
+### Backend Services & Architecture
+- **MediatR** for CQRS pattern with Commands and Queries
+- **AutoMapper** for DTO mapping
+- **FluentValidation** for input validation
+- **Repository Pattern** with IWorkoutRepository and IExerciseRepository
+- **Template Validation Service** with comprehensive validation logic
+- **Exception Handling Middleware** for global error handling
+- **Serilog** for structured logging
+- **CORS** configured for frontend communication
+
+### Frontend Foundation
+- **Next.js 15** with TypeScript and App Router
+- **Tailwind CSS v4** for styling
+- **Layout Components**:
+  - `MainLayout` - Main app wrapper with sidebar/header/footer
+  - `Header` - Navigation header with logo and menu
+  - `Sidebar` - Navigation sidebar with menu items
+  - `Footer` - Footer component
+- **UI Components**:
+  - `Button` - Reusable button component
+  - `Card` - Card container component
+  - `LoadingSpinner` - Loading indicator
+- **API Integration**:
+  - `workoutService` - Workout CRUD operations
+  - `exerciseService` - Exercise operations
+  - `workoutTemplateService` - Template operations
+  - `apiClient` - Axios-based HTTP client
+
+### Frontend Pages (Partially Implemented)
+- **Home/Landing Page** (`/`): ✅ **FULLY IMPLEMENTED**
+  - Hero section with CTAs
+  - Feature highlights
+  - Marketing content
+- **P90X Workout Library** (`/p90x`): ✅ **PARTIALLY IMPLEMENTED** (This is the "Workouts" page)
+  - Displays P90X workout templates in grid layout
+  - Template cards with category, difficulty, duration, exercise count
+  - Start Workout and Details buttons
+  - API integration with backend
+  - May need some changes to account for new complete specifications. 
+- **Workout History** (`/workouts/history`): ⚠️ **BASIC IMPLEMENTATION**
+  - Basic page structure with "No workout history yet" message
+  - Needs full implementation with workout list, filtering, pagination
+
+## ❌ Needs Implementation
+
+### Frontend Pages (Phase 1-5)
+- **Workout Details Page** (`/workouts/[id]`): ❌ **NOT IMPLEMENTED**
+  - Individual workout logging interface
+  - Exercise tracking with sets, reps, weight
+  - Real-time workout progress
+  - Save/complete workout functionality
+- **Templates Page** (`/templates`): ❌ **NOT IMPLEMENTED**
+  - Template management and customization
+  - Create/edit/delete templates
+  - Template versioning
+  - Template sharing
+- **Exercises Page** (`/exercises`): ❌ **NOT IMPLEMENTED**
+  - Exercise library browser
+  - Exercise details with form tips, videos
+  - Exercise search and filtering
+  - Custom exercise creation
+- **Schedule Page** (`/schedule`): ❌ **NOT IMPLEMENTED**
+  - P90X program scheduling
+  - Calendar view
+  - Workout assignments
+  - Progress tracking
+- **Statistics Page** (`/stats`): ❌ **NOT IMPLEMENTED**
+  - Progress tracking and analytics
+  - Charts and graphs
+  - Performance metrics
+  - Goal tracking
+- **Profile/Settings Page** (`/profile`): ❌ **NOT IMPLEMENTED**
+  - User preferences and account management
+  - Profile information
+  - App settings
+  - Data export/import
+- **Authentication Pages**: ❌ **NOT IMPLEMENTED**
+  - Login page (`/login`)
+  - Signup page (`/signup`)
+  - Password reset (`/reset-password`)
+
+### Backend Features (Phase 6)
+- **User Management**: ❌ **NOT IMPLEMENTED**
+  - User authentication and authorization
+  - User profiles and preferences
+  - JWT token management
+  - Password hashing and validation
+- **Session Management**: ❌ **NOT IMPLEMENTED**
+  - JWT tokens and refresh tokens
+  - Session persistence
+  - User context in requests
+- **Template Versioning**: ❌ **NOT IMPLEMENTED**
+  - Template history and rollback
+  - Version comparison
+  - Change tracking
+- **Scheduling System**: ❌ **NOT IMPLEMENTED**
+  - Program scheduling and calendar integration
+  - Workout assignments
+- **History & Analytics**: ❌ **NOT IMPLEMENTED**
+  - Workout history aggregation
+  - Progress tracking calculations
+  - Statistics generation
+  - Performance metrics
+- **Real-time Features**: ❌ **NOT IMPLEMENTED**
+  - Live workout tracking
+  - Real-time notifications
+  - WebSocket integration
+
+## 🔄 Needs Changes
+
+### Frontend Changes Required
+- **P90X Workout Library** (`/p90x`): ⚠️ **NEEDS MODIFICATIONS**
+  - Rename to "Workouts" page to match workflow
+  - Add workout logging functionality
+  - Integrate with Workout Details page
+  - Add workout history integration
+- **Workout History** (`/workouts/history`): ⚠️ **NEEDS MAJOR CHANGES**
+  - Implement workout list display
+  - Add filtering and search
+  - Add pagination
+  - Add workout details view
+  - Add workout editing/deletion
+- **Navigation**: ⚠️ **NEEDS UPDATES**
+  - Update sidebar navigation to match workflow
+  - Add missing page links
+  - Update header navigation
+- **API Services**: ⚠️ **NEEDS EXTENSIONS**
+  - Add user authentication services
+  - Add scheduling services
+  - Add statistics services
+  - Add profile management services
+
+### Backend Changes Required
+- **WorkoutTemplatesController**: ⚠️ **NEEDS EXTENSIONS**
+  - Add CRUD operations for templates
+  - Add template versioning endpoints
+  - Add template sharing endpoints
+- **WorkoutsController**: ⚠️ **NEEDS EXTENSIONS**
+  - Add user-specific workout filtering
+  - Add workout statistics endpoints
+  - Add workout export endpoints
+- **New Controllers Needed**:
+  - `UsersController` - User management
+  - `AuthController` - Authentication
+  - `ScheduleController` - Scheduling
+  - `StatisticsController` - Analytics
+  - `ProfileController` - User profiles
+- **Database Schema**: ⚠️ **NEEDS EXTENSIONS**
+  - Add User entity and related tables
+  - Add Schedule entity
+  - Add Statistics/Progress tracking tables
+  - Add Template versioning tables
+
+### Backend Features
+- **User Management**: Authentication, user accounts, permissions
+- **Session Management**: Workout session logging and tracking
+- **Template Versioning**: Template editing and version control
+- **User Preferences**: Workout cards, favorites, settings
+- **Scheduling System**: P90X program management
+- **History & Analytics**: Workout history and statistics
+- **Exercise Management**: Custom exercise creation
+
+## 🔄 Needs Changes in Current Codebase
+### Data Model Updates
+- **Workout Model**: Current model is too simple, needs session-based structure
+- **User Context**: Add user-specific data throughout the system
+- **Template Relationships**: Add user-specific template management
+- **Session Tracking**: Implement WorkoutSession, WorkoutSessionExercise models
+
+### Frontend Architecture Updates
+- **State Management**: Implement React Context for user state
+- **Routing**: Update navigation to match new page structure
+- **Component Structure**: Reorganize components for new workflow
+- **Mock Data Services**: Create comprehensive mock data system
+
+### API Updates
+- **User Endpoints**: Add user management endpoints
+- **Session Endpoints**: Add workout session management
+- **Template Management**: Add template editing and versioning
+- **Authentication**: Add JWT authentication middleware
+
+# Implementation Order & Strategy
+
+## Development Phases Overview
+The application will be developed using a **frontend-first approach** with mocked data, followed by complete backend implementation. This ensures optimal user experience and allows for rapid iteration on UI/UX.
+
+### Phase 1-5: Frontend Implementation (with Mocked Data)
+**Goal**: Complete frontend implementation with dummy data to validate UX and functionality
+
+### Phase 6: Backend Implementation
+**Goal**: Replace mocked data with real backend functionality, implementing each page's backend in the same order as frontend
+
+### Phase 7: Offline Functionality & Sync
+**Goal**: Enable full app functionality without internet connectivity, with automatic sync when online
+
+## Detailed Implementation Order
+
+### Phase 1: Core Workflow - Workouts Page & Workout Details
+**Priority**: HIGHEST - Core user journey
+**Frontend Changes**:
+- Modify existing P90X Workout Library (`/p90x`) to become the main "Workouts" page
+- Implement Workout Details page (`/workouts/[id]`) for individual workout logging
+- Add workout logging functionality with mocked data
+- Integrate workout completion flow
+
+**Mock Data Needed**:
+- User workout history
+- Workout session data
+- Exercise performance tracking
+- Progress indicators
+
+### Phase 2: Workouts Page CRUD Operations
+**Priority**: HIGH - Essential functionality
+**Frontend Changes**:
+- Add workout editing capabilities
+- Implement workout deletion
+- Add workout filtering and search
+- Enhance workout history display
+
+**Mock Data Needed**:
+- Extended workout history
+- User preferences
+- Filter options
+
+### Phase 3: Templates Page Implementation
+**Priority**: MEDIUM - Template management
+**Frontend Changes**:
+- Create Templates page (`/templates`)
+- Implement template browsing and management
+- Add template creation/editing interface
+- Add template versioning UI
+
+**Mock Data Needed**:
+- User-created templates
+- Template versions
+- Template sharing data
+
+### Phase 4: Schedule Page Implementation
+**Priority**: MEDIUM - Program scheduling
+**Frontend Changes**:
+- Create Schedule page (`/schedule`)
+- Implement calendar view
+- Add workout assignment interface
+- Add progress tracking display
+
+**Mock Data Needed**:
+- P90X program schedule
+- User progress data
+- Calendar events
+
+### Phase 5: Authentication & Profile Pages
+**Priority**: MEDIUM - User management
+**Frontend Changes**:
+- Implement Login page (`/login`)
+- Implement Signup page (`/signup`)
+- Create Profile/Settings page (`/profile`)
+- Add password reset flow
+
+**Mock Data Needed**:
+- User authentication states
+- Profile information
+- App settings
+- Account preferences
+
+### Phase 6: Backend Implementation
+**Priority**: HIGH - Real functionality
+**Backend Changes** (in same order as frontend phases):
+
+#### 6.1: Core Workflow Backend
+- Implement user authentication system
+- Add workout logging endpoints
+- Create workout session management
+- Add real-time workout tracking
+
+#### 6.2: Workouts CRUD Backend
+- Extend workout endpoints for editing/deletion
+- Add workout filtering and search
+- Implement workout history aggregation
+- Add workout export functionality
+
+#### 6.3: Templates Backend
+- Add template CRUD operations
+- Implement template versioning
+- Add template sharing system
+- Create template validation endpoints
+
+#### 6.4: Scheduling Backend
+- Implement program scheduling system
+- Add calendar integration
+- Create progress tracking calculations
+
+#### 6.5: User Management Backend
+- Complete authentication system
+- Add user profile management
+- Implement settings persistence
+- Add data export/import
+
+### Phase 7: Offline Functionality & Sync
+**Priority**: HIGH - Essential for gym use
+**Goal**: Enable full app functionality without internet connectivity
+
+#### 7.1: Offline Data Storage
+**Frontend Changes**:
+- Implement IndexedDB for local data storage
+- Add Service Worker for offline caching
+- Create offline-first data layer
+- Add offline indicators and messaging
+
+**Backend Changes**:
+- Add conflict resolution endpoints
+- Implement data synchronization logic
+- Add offline queue management
+- Create sync status tracking
+
+#### 7.2: Sync Engine Implementation
+**Frontend Changes**:
+- Build sync queue for offline actions
+- Implement conflict resolution UI
+- Add sync status indicators
+- Create manual sync triggers
+
+**Backend Changes**:
+- Add sync endpoints for batch operations
+- Implement conflict resolution algorithms
+- Add data versioning for sync
+- Create sync history tracking
+
+#### 7.3: Offline-First Features
+**Frontend Changes**:
+- Cache workout templates locally
+- Store exercise library offline
+- Enable offline workout logging
+- Add offline progress tracking
+
+**Backend Changes**:
+- Optimize data for offline caching
+- Add incremental sync capabilities
+- Implement data compression
+- Add sync performance monitoring
+
+## Implementation Guidelines
+
+### Frontend Development (Phases 1-5)
+- **Use Mock Data**: Create comprehensive mock data that matches expected backend responses
+- **Focus on UX**: Prioritize user experience and interface design
+- **Mobile-First**: Ensure all interfaces work well on mobile devices
+- **Component Reusability**: Build reusable components for consistency
+- **State Management**: Implement proper state management for complex interactions
+
+### Backend Development (Phase 6)
+- **Match Frontend**: Ensure backend responses match frontend expectations
+- **User Context**: Add user authentication and authorization to all endpoints
+- **Data Validation**: Implement comprehensive input validation
+- **Performance**: Optimize for mobile and gym environments
+- **Security**: Implement proper security measures for user data
+
+### Offline Development (Phase 7)
+- **Offline-First Design**: Design all features to work without internet connectivity
+- **Data Synchronization**: Implement robust sync mechanisms for offline changes
+- **Conflict Resolution**: Handle data conflicts when multiple devices sync
+- **Performance**: Optimize for limited storage and processing power
+- **User Experience**: Provide clear offline indicators and sync status
+
+### Testing Strategy
+- **Frontend Testing**: Test all user flows with mocked data
+- **Integration Testing**: Test frontend-backend integration
+- **Offline Testing**: Test all functionality without internet connectivity
+- **Sync Testing**: Test data synchronization and conflict resolution
+- **Performance Testing**: Ensure app works well in gym environments
+
+# Application Architecture
+
+## Frontend-First Development Strategy
+The application will be developed using a frontend-first approach with mocked data, followed by complete backend implementation. This ensures optimal user experience and allows for rapid iteration on UI/UX.
+
+## Core Workflow Pages
+1. **Marketing Site** (`xtrackerfitness.com`) - Landing page with signup/login
+2. **App Entry** (`app.xtrackerfitness.com`) - Authenticated app shell with sidebar
+3. **Workouts Page** - User's workout cards and quick access
+4. **Workout Details Page** - Session logging interface
+5. **Templates Page** - Template management and editing
+6. **History Page** - Workout history and progress tracking
+7. **Exercises Page** - Exercise library and management
+8. **Schedule Page** - P90X program scheduling
+9. **Statistics Page** - Analytics and progress visualization
+10. **Profile/Settings Page** - User preferences and account management
+
+# Complete Workflow Specification
+
+The following is the complete workflow specification from `docs/workflow.txt`:
+
+## XTracker – P90X App Workflow (v2)
+
+### 1) Marketing Site (Landing) – `xtrackerfitness.com`
+
+**Description**
+Public site that explains the product and funnels visitors into the app.
+
+**Layout & Content**
+
+* Hero with tagline, short value prop, CTAs: **Sign Up Free**, **Log In**
+* Feature highlights (Logging, Templates, Progress)
+* Optional testimonials
+* Footer: Pricing, Support, Privacy, Terms
+
+**Flow**
+
+* **Sign Up Free** → create account → redirect `app.xtrackerfitness.com/workouts`
+* **Log In** → authenticate → redirect `app.xtrackerfitness.com/workouts`
+
+---
+
+### 2) App Entry – `app.xtrackerfitness.com`
+
+**Description**
+Authenticated app shell with a persistent sidebar.
+
+**Sidebar**
+Workouts · Templates · History · Exercises · Schedule · Statistics · Profile/Settings
+
+---
+
+### 3) Workouts Page
+
+**Description**
+The "home base" showing the workout cards the user has chosen to keep handy.
+
+**Layout & Content**
+
+* **Workout Card**
+
+  * Title, duration, #exercises, equipment, difficulty
+  * **Primary Button:** **Log Workout** (only visible button)
+  * **⋯ Card Menu:**
+
+    * **History** (workout-specific history list)
+    * **Edit Template** (opens template in Template Editor)
+    * **Remove** (removes card from Workouts page only; template remains)
+
+* **Add Workout** (global button)
+
+  * "Add from Template" modal → pick any template to show as a card
+
+**Behavior**
+Cards reflect the current version of their associated template. Removing a card does not delete the template.
+
+---
+
+### 4) Detail Page (Logging a Workout)
+
+**Description**
+Where a session is performed and logged; minimal clutter, autosave-first design.
+
+**Header**
+
+* Workout title, date/time
+* **Template Origin**: "From template: \[Template Name]" (view-only summary link)
+* **Finish** (primary) → marks complete and closes (see Finish logic below)
+* **⋯ Session Menu:**
+
+  * **Add Exercise** → opens Exercise Picker (from **Exercises** library) to insert into the current session; user selects destination **round** (or creates a new round)
+  * **Add Round** -> Lets user add a new round to group exerecises into. 
+  * **Save Changes To Template…** → prompts before saving structure back to the template (creates a new template version for future sessions)
+  * **Notes** → opens session-level notes panel
+  * **Clear Prefills** (this session)
+  * **Discard Session** (confirm)
+  * **Manage Hidden (Session)**
+
+**Notes Panel (Session-Level)**
+
+* **Last Session Notes** (read-only)
+* **Current Session Notes** (editable, autosaves)
+
+**Body: Rounds & Exercises**
+
+* Organized into **Rounds** (Round 1, Round 2, …)
+* **Exercise Rows** (fields shown depend on exercise type; all prefilled from last session where available):
+
+  * **Reps/Weight** exercises → Reps + Weight
+  * **Time-based** exercises → Time (mm\:ss)
+  * **Reps-only** exercises → Reps
+  * **Hybrid** exercises → any combination (Reps, Weight, Time)
+* **⋯ Row Menu:**
+
+  * **Hide** (hide this exercise for the current session only)
+  * **Notes** (per-exercise notes panel: last session vs current session)
+* **Movement & Order:**
+
+  * Drag handles to reorder within a round, move between rounds, and reorder rounds
+  * **No "Remove"** option on exercise rows (hide-only)
+
+**Autosave**
+All metric changes, order changes, and notes auto-save continuously.
+
+**Finish Logic**
+
+* On **Finish**, if **structural changes** were made in this session (any of: reordering rounds/exercises, adding exercises, hiding/unhiding exercises, creating/removing rounds) **and** the user hasn't saved them to the template:
+
+  * Show prompt:
+
+    * **Save changes to template** (applies structure back to the template as a new version for future sessions), or
+    * **Don't save** (complete the session; structure remains session-only), or
+    * **Cancel** (stay on Detail)
+* If no structural changes, Finish just marks complete and closes.
+
+---
+
+### 5) Workout Templates Page
+
+**Description**
+Hub for creating and editing workout templates (including P90X presets).
+
+**Layout & Content**
+
+* **Template List** (all templates, incl. original P90X)
+
+  * Actions: **Edit**, **Duplicate**, **Reset to Original (P90X)**
+* **Create Template:** **Start from Original P90X** (pristine) or **Start from Scratch**
+
+**Template Editor**
+
+* Drag/drop to add/remove/reorder **Rounds** and **Exercises**
+* Add from **Exercise Library**; set **exercise type** (Reps/Weight, Time, Reps-only, Hybrid)
+* Set defaults (targets, hidden by default, equipment)
+* Save → creates a **new template version** (future sessions use latest)
+
+---
+
+### 6) History Page
+
+**Description**
+Source of truth for what was actually performed—independent of later template edits.
+
+**Content**
+
+* **Global History** (chronological) with filters (workout, date range, notes search)
+* **Session Detail** (read-only): date/time, workout name, exact rounds & exercises performed, metrics (reps/weight/time), notes, totals (volume/duration)
+
+**Rule**
+History renders from the session snapshot; template changes never retro-edit past sessions.
+
+---
+
+### 7) Exercises Page (Library)
+
+**Description**
+Searchable library powering both Templates and the session **Add Exercise** flow.
+
+**Content**
+
+* Search/filter by name, type, tags, equipment
+* Exercise detail: description, cues, aliases, equipment
+* **Exercise Types** (determine fields on Detail): Reps/Weight · Time-based · Reps-only · Hybrid
+* User actions: add/edit/delete **custom** exercises
+
+---
+
+### 8) Schedule Page
+
+**Description**
+Planner + history navigator for P90X or custom programs.
+
+**Layout & Behavior**
+
+* Calendar grid by phases/weeks with assigned workouts
+* **Past date:**
+
+  * Logged → open that session in **History**
+  * Unlogged → option to **Log Retroactively** (opens Detail with that date)
+* **Today/Future date:** open **Detail** for logging (current template version)
+* Completed days auto-mark when a session finishes; missed days can shift
+
+---
+
+### 9) Statistics Page
+
+**Description**
+Analytics to visualize progress and consistency.
+
+**Content**
+Charts: volume (weight×reps), time-based improvements, adherence/frequency · Highlights: PRs, streaks, deltas
+
+---
+
+### 10) Rules & Constraints
+
+* **Autosave & Finish**: everything saves continuously; **Finish** closes and marks complete; if unsaved structural changes exist, prompt to "Save changes to template"
+* **Templates vs Sessions**: template editing mainly on Templates page; Detail has explicit **Save Changes To Template…** with confirm and versioning
+* **No Predefined vs Custom split**: all templates editable; P90X baselines can be reset to original
+* **Hidden vs No Remove**: exercise **Hide** is session-only; **Remove** is intentionally not offered on Detail
+* **Exercise Type Logic**: exercise type dictates which fields (Reps, Weight, Time) appear; hybrids can show multiple
+* **Unobtrusive Editing**: structural actions live behind ⋯ menus and drag handles to keep logging clean
+
+---
+
+# Detailed Page Specifications
+
+## 1. Marketing Site (Landing Page)
+**Purpose**: Convert visitors to users and provide product information
+
+**Key Features**:
+- Hero section with value proposition and CTAs
+- Feature highlights (Logging, Templates, Progress)
+- Testimonials and social proof
+- Pricing information
+- Footer with support links
+
+**User Flows**:
+- **Sign Up Free** → Account creation → Redirect to app
+- **Log In** → Authentication → Redirect to app
+
+## 2. App Entry (Authenticated Shell)
+**Purpose**: Provide consistent navigation and user context
+
+**Key Features**:
+- Persistent sidebar navigation
+- User profile indicator
+- App-wide state management
+- Responsive mobile navigation
+
+**Navigation Structure**:
+- Workouts (primary)
+- Templates
+- History
+- Exercises
+- Schedule
+- Statistics
+- Profile/Settings
+
+## 3. Workouts Page (Primary Interface)
+**Purpose**: User's personalized workout dashboard with quick access to frequently used workouts
+
+**Key Features**:
+- **Workout Cards**: User-selected templates displayed as cards
+- **Card Information**: Title, duration, exercise count, equipment, difficulty
+- **Primary Action**: "Log Workout" button (only visible action)
+- **Card Menu**: History, Edit Template, Remove from favorites
+- **Add Workout**: Global button to add templates to favorites
+
+**Data Requirements**:
+- User's selected workout templates
+- Template metadata (duration, exercise count, equipment)
+- Last workout date for each template
+- Quick stats (completion rate, streaks)
+
+**Mock Data Structure**:
+```typescript
+interface WorkoutCard {
+  id: string;
+  templateId: string;
+  templateName: string;
+  description: string;
+  estimatedDurationMinutes: number;
+  exerciseCount: number;
+  equipment: string;
+  difficulty: 'Beginner' | 'Intermediate' | 'Advanced';
+  category: string;
+  lastWorkoutDate?: string;
+  completionCount: number;
+  isFavorite: boolean;
+}
+```
+
+## 4. Workout Details Page (Session Logging)
+**Purpose**: Core workout logging interface with minimal friction and maximum functionality
+
+**Key Features**:
+- **Header**: Workout title, date/time, template origin link
+- **Primary Actions**: Finish button, session menu (⋯)
+- **Session Menu**: Add Exercise, Add Round, Save to Template, Notes, Clear Prefills, Discard, Manage Hidden
+- **Notes Panel**: Last session notes (read-only), current session notes (editable, autosave)
+- **Body**: Organized into Rounds with Exercise Rows
+- **Exercise Rows**: Dynamic fields based on exercise type (Reps/Weight, Time, Reps-only, Hybrid)
+- **Row Menu**: Hide exercise, Notes
+- **Drag & Drop**: Reorder exercises within/between rounds, reorder rounds
+- **Autosave**: All changes save continuously
+- **Finish Logic**: Prompt to save structural changes to template
+
+**Data Requirements**:
+- Workout template structure
+- Exercise definitions with field types
+- Previous session data for prefills
+- Session state management
+- Template versioning
+
+**Mock Data Structure**:
+```typescript
+interface WorkoutSession {
+  id: string;
+  templateId: string;
+  templateName: string;
+  startTime: string;
+  endTime?: string;
+  isCompleted: boolean;
+  rounds: WorkoutRound[];
+  sessionNotes: string;
+  lastSessionNotes: string;
+  hasStructuralChanges: boolean;
+}
+
+interface WorkoutRound {
+  id: string;
+  name: string;
+  order: number;
+  exercises: WorkoutSessionExercise[];
+}
+
+interface WorkoutSessionExercise {
+  id: string;
+  exerciseId: string;
+  exerciseName: string;
+  exerciseType: 'Reps/Weight' | 'Time' | 'Reps-only' | 'Hybrid';
+  order: number;
+  isHidden: boolean;
+  sets: ExerciseSet[];
+  notes: string;
+  lastSessionData?: ExerciseSet[];
+}
+
+interface ExerciseSet {
+  setNumber: number;
+  reps?: number;
+  weight?: number;
+  duration?: number; // seconds
+  isCompleted: boolean;
+}
+```
+
+## 5. Templates Page (Template Management)
+**Purpose**: Comprehensive template creation, editing, and management system
+
+**Key Features**:
+- **Template List**: All templates (P90X + custom) with actions
+- **Template Actions**: Edit, Duplicate, Reset to Original (P90X)
+- **Create Options**: Start from Original P90X, Start from Scratch
+- **Template Editor**: Drag/drop interface for rounds and exercises
+- **Exercise Library Integration**: Add exercises from library
+- **Template Settings**: Defaults, equipment, difficulty, category
+- **Version Management**: Save creates new template version
+
+**Data Requirements**:
+- All workout templates (P90X + custom)
+- Exercise library for template building
+- Template versioning system
+- User permissions (edit vs view-only)
+
+**Mock Data Structure**:
+```typescript
+interface WorkoutTemplate {
+  id: string;
+  name: string;
+  description: string;
+  category: string;
+  difficulty: string;
+  estimatedDurationMinutes: number;
+  equipment: string;
+  instructions: string;
+  isP90XWorkout: boolean;
+  isCustom: boolean;
+  version: number;
+  createdBy: string;
+  createdAt: string;
+  updatedAt: string;
+  sections: TemplateSection[];
+}
+
+interface TemplateSection {
+  id: string;
+  name: string;
+  type: 'WarmUp' | 'Main' | 'Superset' | 'Circuit' | 'CoolDown' | 'Stretch';
+  order: number;
+  restPeriodSeconds?: number;
+  circuitRounds?: number;
+  instructions: string;
+  exercises: TemplateExercise[];
+}
+
+interface TemplateExercise {
+  id: string;
+  exerciseId: string;
+  exercise: Exercise;
+  order: number;
+  sets?: number;
+  repsMin?: number;
+  repsMax?: number;
+  durationSeconds?: number;
+  weight?: number;
+  restBetweenSetsSeconds?: number;
+  notes: string;
+  isOptional: boolean;
+}
+```
+
+## 6. History Page (Workout History)
+**Purpose**: Comprehensive workout history with filtering, search, and progress tracking
+
+**Key Features**:
+- **Global History**: Chronological list with filters
+- **Filters**: Workout type, date range, notes search
+- **Session Detail**: Read-only view of completed workouts
+- **Progress Tracking**: Volume, duration, performance metrics
+- **Export Functionality**: Data export capabilities
+
+**Data Requirements**:
+- All completed workout sessions
+- Session snapshots (immutable)
+- Performance metrics and trends
+- Search and filter capabilities
+
+## 7. Exercises Page (Exercise Library)
+**Purpose**: Comprehensive exercise database with search, filtering, and management
+
+**Key Features**:
+- **Exercise Search**: Name, type, tags, equipment
+- **Exercise Detail**: Description, cues, aliases, equipment
+- **Exercise Types**: Reps/Weight, Time-based, Reps-only, Hybrid
+- **Custom Exercises**: User-created exercises
+- **Exercise Management**: Add, edit, delete custom exercises
+
+**Data Requirements**:
+- Complete exercise database
+- Exercise categorization and tagging
+- User custom exercises
+- Exercise metadata (equipment, difficulty, muscle groups)
+
+## 8. Schedule Page (P90X Program Management)
+**Purpose**: P90X program scheduling with calendar interface and progress tracking
+
+**Key Features**:
+- **Calendar Grid**: Phase/week view with assigned workouts
+- **Past Dates**: View completed sessions or log retroactively
+- **Future Dates**: Start new sessions from templates
+- **Progress Tracking**: Completion status, missed days
+- **Program Management**: Phase transitions, rest days
+
+**Data Requirements**:
+- P90X program schedule
+- User progress tracking
+- Calendar state management
+- Program phase management
+
+## 9. Statistics Page (Analytics)
+**Purpose**: Comprehensive progress analytics and performance visualization
+
+**Key Features**:
+- **Volume Tracking**: Weight × reps over time
+- **Time-based Improvements**: Duration and efficiency metrics
+- **Adherence Metrics**: Completion rates, streaks
+- **Performance Highlights**: PRs, improvements, trends
+- **Chart Visualizations**: Progress graphs and trends
+
+## 10. Profile/Settings Page (User Management)
+**Purpose**: User preferences, account settings, and data management
+
+**Key Features**:
+- **Profile Information**: User details, preferences
+- **App Settings**: Theme, notifications, defaults
+- **Data Management**: Export, import, backup
+- **Account Settings**: Password, email, subscription
+
+# Technical Architecture
+
+## Frontend Stack
+- **Framework**: Next.js 15 with App Router
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS v4
+- **State Management**: React Context + useReducer
+- **HTTP Client**: Axios with interceptors
+- **UI Components**: Custom components with Tailwind
+- **Form Handling**: React Hook Form with validation
+- **Drag & Drop**: React DnD or similar
+- **Charts**: Chart.js or Recharts
+- **Date Handling**: date-fns or Day.js
+
+## Backend Stack (Future Implementation)
+- **Framework**: .NET 8 Web API
+- **Architecture**: Vertical Slice Architecture
+- **Database**: PostgreSQL
+- **ORM**: Entity Framework Core
+- **Authentication**: JWT with refresh tokens
+- **Validation**: FluentValidation
+- **Mapping**: AutoMapper
+- **Logging**: Serilog
+- **Caching**: Redis (optional)
+
+## Data Models (Backend)
+```csharp
+// Core Entities
+public class User { }
+public class WorkoutTemplate { }
+public class WorkoutSession { }
+public class Exercise { }
+public class UserWorkoutCard { }
+
+// Session Management
+public class WorkoutSessionRound { }
+public class WorkoutSessionExercise { }
+public class ExerciseSet { }
+
+// Template Management
+public class TemplateSection { }
+public class TemplateExercise { }
+public class TemplateVersion { }
+
+// Scheduling
+public class ProgramSchedule { }
+public class ScheduledWorkout { }
+public class ProgramPhase { }
+```
+
+# Development Roadmap
+
+## Phase 1: Core Workflow (Frontend Only)
+**Goal**: Implement complete workout logging workflow with mocked data
+
+**Tasks**:
+1. **Workouts Page Implementation**
+   - Workout cards display
+   - Add/remove workout cards
+   - Card menu functionality
+   - Mock data integration
+
+2. **Workout Details Page Implementation**
+   - Session logging interface
+   - Round and exercise management
+   - Dynamic field rendering
+   - Drag & drop functionality
+   - Autosave simulation
+   - Finish logic with template saving
+
+3. **Mock Data Services**
+   - Workout template service
+   - Exercise library service
+   - Session management service
+   - User preferences service
+
+**Deliverables**:
+- Fully functional workout logging workflow
+- Complete UI/UX implementation
+- Mock data services
+- Mobile-responsive design
+
+## Phase 2: Template Management (Frontend Only)
+**Goal**: Complete template creation and editing system
+
+**Tasks**:
+1. **Templates Page Implementation**
+   - Template list and filtering
+   - Template actions (edit, duplicate, reset)
+   - Template creation workflow
+
+2. **Template Editor Implementation**
+   - Drag & drop template building
+   - Exercise library integration
+   - Section management
+   - Template settings
+
+3. **Enhanced Mock Data**
+   - Template versioning simulation
+   - Exercise library expansion
+   - User template management
+
+**Deliverables**:
+- Complete template management system
+- Template editor with drag & drop
+- Exercise library integration
+- Template versioning UI
+
+## Phase 3: History & Analytics (Frontend Only)
+**Goal**: Comprehensive history and progress tracking
+
+**Tasks**:
+1. **History Page Implementation**
+   - Workout history display
+   - Filtering and search
+   - Session detail views
+   - Progress visualization
+
+2. **Statistics Page Implementation**
+   - Performance charts
+   - Progress metrics
+   - Trend analysis
+   - Achievement tracking
+
+3. **Enhanced Mock Data**
+   - Historical workout data
+   - Performance metrics
+   - Progress calculations
+
+**Deliverables**:
+- Complete history management
+- Statistics and analytics
+- Progress visualization
+- Data export functionality
+
+## Phase 4: Scheduling System (Frontend Only)
+**Goal**: P90X program scheduling and calendar management
+
+**Tasks**:
+1. **Schedule Page Implementation**
+   - Calendar interface
+   - Program phase management
+   - Workout assignment
+   - Progress tracking
+
+2. **Program Management**
+   - P90X schedule integration
+   - Phase transitions
+   - Rest day management
+   - Custom program creation
+
+**Deliverables**:
+- Complete scheduling system
+- P90X program integration
+- Calendar interface
+- Program management tools
+
+## Phase 5: User Management (Frontend Only)
+**Goal**: Authentication and user account management
+
+**Tasks**:
+1. **Authentication Pages**
+   - Login/signup forms
+   - Password reset
+   - Email verification
+
+2. **Profile/Settings Pages**
+   - User profile management
+   - App preferences
+   - Data management
+   - Account settings
+
+3. **Mock Authentication**
+   - User session simulation
+   - Permission management
+   - User-specific data
+
+**Deliverables**:
+- Complete authentication flow
+- User profile management
+- Settings and preferences
+- Mock user system
+
+## Phase 6: Backend Implementation
+**Goal**: Complete backend implementation matching frontend functionality
+
+**Tasks**:
+1. **Core Backend Services**
+   - User management
+   - Workout template management
+   - Session logging
+   - Exercise library
+
+2. **API Development**
+   - RESTful endpoints
+   - Authentication middleware
+   - Data validation
+   - Error handling
+
+3. **Database Implementation**
+   - Schema design
+   - Migrations
+   - Seeding
+   - Performance optimization
+
+4. **Integration**
+   - Frontend-backend integration
+   - Real data migration
+   - Performance testing
+   - Security implementation
+
+**Deliverables**:
+- Complete backend API
+- Database implementation
+- Authentication system
+- Production-ready application
+
+# Success Metrics
+
+## User Experience Metrics
+- **Workout Logging Time**: < 30 seconds to start logging
+- **Template Creation Time**: < 5 minutes for basic template
+- **Mobile Usability**: Touch-friendly interface, < 3 taps for common actions
+- **Data Persistence**: 100% autosave reliability
+
+## Technical Metrics
+- **Frontend Performance**: < 2s initial load, < 500ms navigation
+- **Backend Performance**: < 200ms API response times
+- **Data Integrity**: Zero data loss, complete audit trail
+- **Mobile Responsiveness**: 100% mobile compatibility
+
+## Business Metrics
+- **User Engagement**: Daily active users, session duration
+- **Feature Adoption**: Template creation rate, history usage
+- **User Retention**: 30-day retention rate
+- **Support Requests**: Minimal support tickets for core features
+
+# Risk Mitigation
+
+## Technical Risks
+- **Data Loss**: Comprehensive autosave and backup systems
+- **Performance**: Frontend optimization and backend caching
+- **Mobile Compatibility**: Extensive mobile testing
+- **Browser Support**: Progressive enhancement approach
+
+## User Experience Risks
+- **Complexity**: Progressive disclosure and intuitive navigation
+- **Learning Curve**: Onboarding flow and help documentation
+- **Data Migration**: Seamless transition from mock to real data
+- **Feature Creep**: Strict scope management and MVP focus
+
+## Business Risks
+- **User Adoption**: User testing and feedback integration
+- **Competition**: Unique value proposition and feature differentiation
+- **Scalability**: Architecture designed for growth
+- **Maintenance**: Clean code and comprehensive documentation
+
+# Appendix
+
+## Reference Materials
+- **Original PRD**: `.taskmaster/docs/prd.txt` - Previous implementation approach
+- **Workflow Document**: `docs/workflow.txt` - Detailed user workflow specifications
+- **Current Codebase**: Existing .NET backend and Next.js frontend foundation
+
+## Design Principles
+- **Mobile-First**: All interfaces designed for mobile use
+- **Minimal Friction**: Reduce steps for common actions
+- **Data Integrity**: Never lose user data
+- **Progressive Enhancement**: Core functionality works everywhere
+- **User Control**: Users own their data and templates
+
+## Technology Decisions
+- **Frontend-First**: Rapid prototyping and user feedback
+- **Mock Data**: Complete functionality before backend
+- **TypeScript**: Type safety and developer experience
+- **Tailwind CSS**: Rapid UI development and consistency
+- **Vertical Slice Architecture**: Maintainable backend structure
+</context>
