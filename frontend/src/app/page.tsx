@@ -1,7 +1,6 @@
 import MainLayout from '@/components/layout/MainLayout';
 import Card from '@/components/ui/Card';
 import Button from '@/components/ui/Button';
-import Link from 'next/link';
 
 export default function Home() {
   return (
@@ -11,25 +10,24 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="text-center">
             <h1 className="text-4xl md:text-6xl font-bold text-gray-900 dark:text-gray-100 mb-6">
-              Welcome to{' '}
+              Transform Your Body with{' '}
               <span className="text-blue-600 dark:text-blue-400">XTracker</span>
             </h1>
             <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-3xl mx-auto">
-              Track your P90X workouts, monitor your progress, and achieve your fitness goals 
-              with our comprehensive workout logging system.
+              The ultimate P90X workout tracking platform. Log your workouts, monitor your progress, 
+              and achieve your fitness goals with our comprehensive system designed for serious athletes.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/workouts">
-                <Button size="lg" className="w-full sm:w-auto">
-                  Start Logging Workouts
-                </Button>
-              </Link>
-              <Link href="/schedule">
-                <Button variant="outline" size="lg" className="w-full sm:w-auto">
-                  View Schedule
-                </Button>
-              </Link>
+              <Button size="lg" className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white">
+                Sign Up Free
+              </Button>
+              <Button variant="outline" size="lg" className="w-full sm:w-auto border-blue-600 text-blue-600 hover:bg-blue-50">
+                Log In
+              </Button>
             </div>
+            <p className="text-sm text-gray-500 dark:text-gray-400 mt-4">
+              Join thousands of athletes already transforming their fitness journey
+            </p>
           </div>
         </div>
 
@@ -84,13 +82,16 @@ export default function Home() {
               Ready to transform your fitness journey?
             </h2>
             <p className="text-xl text-blue-100 mb-8">
-              Join thousands of users who are already tracking their P90X progress
+              Join thousands of athletes who are already tracking their P90X progress and achieving incredible results
             </p>
-            <Link href="/workouts">
-              <Button variant="secondary" size="lg">
-                Get Started Now
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button variant="secondary" size="lg" className="w-full sm:w-auto">
+                Start Your Transformation
               </Button>
-            </Link>
+              <Button variant="outline" size="lg" className="w-full sm:w-auto border-white text-white hover:bg-white hover:text-blue-600">
+                Learn More
+              </Button>
+            </div>
           </div>
         </div>
       </div>

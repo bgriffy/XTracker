@@ -12,8 +12,6 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
   const pathname = usePathname();
 
   const navigation = [
-    { name: 'Dashboard', href: '/', icon: '🏠' },
-    { name: 'Workouts', href: '/workouts', icon: '💪' },
     { name: 'P90X Library', href: '/p90x', icon: '🔥' },
     { name: 'History', href: '/workouts/history', icon: '📈' },
     { name: 'Schedule', href: '/schedule', icon: '📅' },
@@ -47,12 +45,12 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
         <div className="flex flex-col h-full">
           {/* Header */}
           <div className="flex items-center justify-between h-16 px-6 border-b border-gray-700">
-            <div className="flex items-center space-x-2">
+            <Link href="/" className="flex items-center space-x-2">
               <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold text-lg">X</span>
               </div>
               <span className="text-lg font-semibold text-white">XTracker</span>
-            </div>
+            </Link>
             <button
               onClick={onClose}
               className="lg:hidden text-gray-400 hover:text-gray-200"
@@ -86,7 +84,6 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
           <div className="p-4 border-t border-gray-700">
             <div className="text-xs text-gray-400 text-center">
               <p>Version 1.0.0</p>
-              <p className="mt-1">Built with ❤️</p>
             </div>
           </div>
         </div>

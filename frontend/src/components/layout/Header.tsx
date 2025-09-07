@@ -27,12 +27,6 @@ export default function Header() {
           {/* Desktop Navigation */}
           <nav className="hidden md:flex space-x-8">
             <Link
-              href="/workouts"
-              className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors"
-            >
-              Workouts
-            </Link>
-            <Link
               href="/p90x"
               className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors"
             >
@@ -89,13 +83,6 @@ export default function Header() {
         {isMenuOpen && (
           <div className="md:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 border-t border-gray-700">
-              <Link
-                href="/workouts"
-                className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition-colors"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Workouts
-              </Link>
               <Link
                 href="/p90x"
                 className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition-colors"
