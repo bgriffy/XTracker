@@ -137,22 +137,22 @@ export function WorkoutForm({
         {/* Basic Workout Information */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label htmlFor="date" className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="date" className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-1">
               Date *
             </label>
             <input
               type="date"
               id="date"
               {...register('date')}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
             {errors.date && (
-              <p className="mt-1 text-sm text-red-600">{errors.date.message}</p>
+              <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.date.message}</p>
             )}
           </div>
 
           <div>
-            <label htmlFor="type" className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="type" className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-1">
               Workout Type *
             </label>
             <input
@@ -160,17 +160,17 @@ export function WorkoutForm({
               id="type"
               placeholder="e.g., Chest & Triceps, Cardio, Full Body"
               {...register('type')}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
             {errors.type && (
-              <p className="mt-1 text-sm text-red-600">{errors.type.message}</p>
+              <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.type.message}</p>
             )}
           </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
-            <label htmlFor="durationMinutes" className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="durationMinutes" className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-1">
               Duration (minutes) *
             </label>
             <input
@@ -179,15 +179,15 @@ export function WorkoutForm({
               min="1"
               max="480"
               {...register('durationMinutes', { valueAsNumber: true })}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
             {errors.durationMinutes && (
-              <p className="mt-1 text-sm text-red-600">{errors.durationMinutes.message}</p>
+              <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.durationMinutes.message}</p>
             )}
           </div>
 
           <div>
-            <label htmlFor="reps" className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="reps" className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-1">
               Total Reps
             </label>
             <input
@@ -196,15 +196,15 @@ export function WorkoutForm({
               min="0"
               max="1000"
               {...register('reps', { valueAsNumber: true })}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
             {errors.reps && (
-              <p className="mt-1 text-sm text-red-600">{errors.reps.message}</p>
+              <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.reps.message}</p>
             )}
           </div>
 
           <div>
-            <label htmlFor="weight" className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="weight" className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-1">
               Weight (lbs)
             </label>
             <input
@@ -214,16 +214,16 @@ export function WorkoutForm({
               max="1000"
               step="0.1"
               {...register('weight', { valueAsNumber: true })}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
             {errors.weight && (
-              <p className="mt-1 text-sm text-red-600">{errors.weight.message}</p>
+              <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.weight.message}</p>
             )}
           </div>
         </div>
 
         <div>
-          <label htmlFor="notes" className="block text-sm font-medium text-gray-700 mb-1">
+          <label htmlFor="notes" className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-1">
             Notes
           </label>
           <textarea
@@ -234,14 +234,14 @@ export function WorkoutForm({
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
           {errors.notes && (
-            <p className="mt-1 text-sm text-red-600">{errors.notes.message}</p>
+            <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.notes.message}</p>
           )}
         </div>
 
         {/* Exercises Section */}
         <div>
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-medium text-gray-900">Exercises</h3>
+            <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100">Exercises</h3>
             <Button
               type="button"
               onClick={addExercise}
@@ -253,17 +253,17 @@ export function WorkoutForm({
           </div>
 
           {fields.length === 0 && (
-            <div className="text-center py-8 text-gray-500">
-              <p>No exercises added yet.</p>
-              <p className="text-sm">Click "Add Exercise" to start tracking specific exercises.</p>
+            <div className="text-center py-8 text-gray-600 dark:text-gray-300">
+              <p className="text-base">No exercises added yet.</p>
+              <p className="text-sm mt-1">Click "Add Exercise" to start tracking specific exercises.</p>
             </div>
           )}
 
           <div className="space-y-4">
             {fields.map((field, index) => (
-              <div key={field.id} className="border border-gray-200 rounded-lg p-4 bg-gray-50">
+              <div key={field.id} className="border border-gray-200 dark:border-gray-700 rounded-lg p-4 bg-gray-50 dark:bg-gray-800">
                 <div className="flex items-center justify-between mb-3">
-                  <h4 className="font-medium text-gray-900">Exercise {index + 1}</h4>
+                  <h4 className="font-medium text-gray-900 dark:text-gray-100">Exercise {index + 1}</h4>
                   <Button
                     type="button"
                     onClick={() => removeExercise(index)}
@@ -277,12 +277,12 @@ export function WorkoutForm({
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-1">
                       Exercise *
                     </label>
                     <select
                       {...register(`exercises.${index}.exerciseId`, { valueAsNumber: true })}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     >
                       <option value={0}>Select an exercise</option>
                       {exercises.map((exercise) => (
@@ -292,14 +292,14 @@ export function WorkoutForm({
                       ))}
                     </select>
                     {errors.exercises?.[index]?.exerciseId && (
-                      <p className="mt-1 text-sm text-red-600">
+                      <p className="mt-1 text-sm text-red-600 dark:text-red-400">
                         {errors.exercises[index]?.exerciseId?.message}
                       </p>
                     )}
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-1">
                       Sets *
                     </label>
                     <input
@@ -307,17 +307,17 @@ export function WorkoutForm({
                       min="1"
                       max="50"
                       {...register(`exercises.${index}.sets`, { valueAsNumber: true })}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     />
                     {errors.exercises?.[index]?.sets && (
-                      <p className="mt-1 text-sm text-red-600">
+                      <p className="mt-1 text-sm text-red-600 dark:text-red-400">
                         {errors.exercises[index]?.sets?.message}
                       </p>
                     )}
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-1">
                       Reps *
                     </label>
                     <input
@@ -325,17 +325,17 @@ export function WorkoutForm({
                       min="1"
                       max="1000"
                       {...register(`exercises.${index}.reps`, { valueAsNumber: true })}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     />
                     {errors.exercises?.[index]?.reps && (
-                      <p className="mt-1 text-sm text-red-600">
+                      <p className="mt-1 text-sm text-red-600 dark:text-red-400">
                         {errors.exercises[index]?.reps?.message}
                       </p>
                     )}
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-1">
                       Weight (lbs)
                     </label>
                     <input
@@ -344,17 +344,17 @@ export function WorkoutForm({
                       max="1000"
                       step="0.1"
                       {...register(`exercises.${index}.weight`, { valueAsNumber: true })}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     />
                     {errors.exercises?.[index]?.weight && (
-                      <p className="mt-1 text-sm text-red-600">
+                      <p className="mt-1 text-sm text-red-600 dark:text-red-400">
                         {errors.exercises[index]?.weight?.message}
                       </p>
                     )}
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-1">
                       Duration (seconds)
                     </label>
                     <input
@@ -362,27 +362,27 @@ export function WorkoutForm({
                       min="1"
                       max="300"
                       {...register(`exercises.${index}.duration`, { valueAsNumber: true })}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     />
                     {errors.exercises?.[index]?.duration && (
-                      <p className="mt-1 text-sm text-red-600">
+                      <p className="mt-1 text-sm text-red-600 dark:text-red-400">
                         {errors.exercises[index]?.duration?.message}
                       </p>
                     )}
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-1">
                       Exercise Notes
                     </label>
                     <input
                       type="text"
                       placeholder="e.g., felt strong, form was good"
                       {...register(`exercises.${index}.notes`)}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     />
                     {errors.exercises?.[index]?.notes && (
-                      <p className="mt-1 text-sm text-red-600">
+                      <p className="mt-1 text-sm text-red-600 dark:text-red-400">
                         {errors.exercises[index]?.notes?.message}
                       </p>
                     )}
