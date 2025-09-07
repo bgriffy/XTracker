@@ -1,33 +1,22 @@
 'use client';
 
+import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import MainLayout from '@/components/layout/MainLayout';
-import { P90XWorkoutList } from '@/components/workouts/P90XWorkoutList';
-import { WorkoutTemplate } from '@/lib/api/workoutService';
 
-export default function P90XPage() {
+export default function P90XRedirectPage() {
   const router = useRouter();
 
-  const handleStartWorkout = (template: WorkoutTemplate) => {
-    // TODO: Implement workout starting logic
-    console.log('Starting workout:', template);
-    alert(`Starting ${template.name} workout! (Feature coming soon)`);
-  };
-
-  const handleViewDetails = (template: WorkoutTemplate) => {
-    router.push(`/workouts/${template.id}`);
-  };
+  useEffect(() => {
+    // Redirect to the new workouts page
+    router.replace('/workouts');
+  }, [router]);
 
   return (
-    <MainLayout showHeader={false} showFooter={false}>
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <P90XWorkoutList
-            onStartWorkout={handleStartWorkout}
-            onViewDetails={handleViewDetails}
-          />
-        </div>
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
+      <div className="text-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
+        <p className="text-gray-600 dark:text-gray-400">Redirecting to workouts...</p>
       </div>
-    </MainLayout>
+    </div>
   );
 }
