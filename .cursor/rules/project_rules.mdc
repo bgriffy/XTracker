@@ -1,0 +1,11 @@
+---
+description: Cursor rules for the XTracker project
+globs: **/*
+alwaysApply: true
+---
+
+# General Project Rules
+
+## Terminal Commands
+- Always run commands with full path and command in the same line
+- Use format: `cd C:\Source\Repos\XTracker\[directory] && [command]`
