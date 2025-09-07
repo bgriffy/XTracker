@@ -6,8 +6,19 @@ using XTracker.Api.Features.Workouts.Validators;
 using XTracker.Api.Features.Workouts.Mapping;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Configure Serilog
+Log.Logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration)
+    .Enrich.FromLogContext()
+    .WriteTo.Console()
+    .WriteTo.File("logs/xtracker-.txt", rollingInterval: RollingInterval.Day)
+    .CreateLogger();
+
+builder.Host.UseSerilog();
 
 // Add services to the container.
 builder.Services.AddControllers();
@@ -74,4 +85,16 @@ app.MapControllers();
 // Remove the default weather forecast endpoint as it's not needed
 // app.MapGet("/weatherforecast", () => { ... });
 
-app.Run();
+try
+{
+    Log.Information("Starting XTracker API");
+    app.Run();
+}
+catch (Exception ex)
+{
+    Log.Fatal(ex, "Application terminated unexpectedly");
+}
+finally
+{
+    Log.CloseAndFlush();
+}
