@@ -1,0 +1,31 @@
+- User goes to home page 
+- User goes to "Workouts"
+- Users sees pre-defined list of workouts based on actual p90x workout list (similar to screenshot):
+    - Chest & Back
+    - Shoulders & Arms
+    - Legs & Back
+    - Chest, Shoulders & Triceps
+    - Back & Biceps
+    - Plyometrics
+    - Kenpo X
+    - Core Synergistics
+    - Ab Ripper X
+    - Yoga X
+    - X Stretch
+    - Cardio X
+- User can add/edit/modify this list if desired 
+- Next to each workout theres a "Log Workout" button
+- When you hit log workout, it opens up the detail page for that workout which lists all the exercies, just like you currently see on the detail page 
+- Each exercise shows last metrics (reps, weights, etc) from the previous time where you performed that workout 
+- If there are multiple sets of that exercise, we should just list the exercise twice. Example: 
+    - Pushups -- 10 pounds -- 5 reps 
+    - Pullups -- 12 reps 
+    - Lawn-Mowers -- 25 pounds -- 8 reps 
+    - Pushups -- 10 pouneds -- 10 reps
+    - etc. 
+- Submit button at the bottom of workout detail 
+- There are also needs to be some kind of way to view previous instances of that workout, so you can easily see your progress, or how you performed on a particular day 
+    - Have a second tab on the "Workouts Page", I.E. "History"
+    - Also want button "History" for each workout card on the main "Workouts" tab 
+- Should not be able to delete the pre-defined workouts. But users can delete custom workouts if they want.
+- User should be able to "hide" particular exercises in a workout. There should be some menu option to where you can unhide exercises.  
