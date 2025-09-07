@@ -31,7 +31,7 @@ $orig = Get-Location
         # Frontend thread (only if not already running)
         if (-not $frontendRunning) {
             Start-ThreadJob -Name "XTracker.Web" -ScriptBlock {
-                Set-Location "..\XTrack\frontend"
+                Set-Location "..\frontend"
                 npm run dev
             } | Out-Null
         }
