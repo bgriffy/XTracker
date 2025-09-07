@@ -9,9 +9,10 @@ interface MainLayoutProps {
   children: React.ReactNode;
   showSidebar?: boolean;
   showHeader?: boolean;
+  showFooter?: boolean;
 }
 
-export default function MainLayout({ children, showSidebar = true, showHeader = true }: MainLayoutProps) {
+export default function MainLayout({ children, showSidebar = true, showHeader = true, showFooter = true }: MainLayoutProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const closeSidebar = () => {
@@ -19,7 +20,7 @@ export default function MainLayout({ children, showSidebar = true, showHeader = 
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       {/* Header */}
       {showHeader && <Header />}
 
@@ -36,7 +37,7 @@ export default function MainLayout({ children, showSidebar = true, showHeader = 
           </div>
           
           {/* Footer */}
-          <Footer />
+          {showFooter && <Footer />}
         </main>
       </div>
     </div>

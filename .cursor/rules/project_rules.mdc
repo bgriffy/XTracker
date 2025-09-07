@@ -4,15 +4,6 @@ globs: ["**/*"]
 alwaysApply: true
 ---
 
----
-description: Cursor rules for the XTracker project (scoped, terse, enforceable)
-globs:
-  - backend/**/*
-  - frontend/**/*
-  - scripts/**/*
-alwaysApply: false
----
-
 # General Project Rules
 
 ## Terminal Commands
@@ -31,6 +22,7 @@ After running the command, wait five seconds and check output for any errors.
 > - Do **not** split commands across lines.  
 > - Do **not** add delays or confirmations unless explicitly asked.  
 > - If a kill step fails because the process isn’t running, ignore (it’s already silenced).
+> - If you've only made a frontend change, do not rebuild the application.
 
 ## One-off Backend Kill (anytime you need to stop it)
 - Preferred silent command:  
@@ -38,6 +30,10 @@ After running the command, wait five seconds and check output for any errors.
 
 
 ## Git 
+ - When I ask you to commit changes to git, just do it one command, I.E. 
+   ```
+   git add . && git commit -m "{message-goes-here}"
+   ```
  - Use the following when creating commit messages: 
         FORMAT:
         <type>(<scope>): <subject>
