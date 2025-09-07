@@ -12,7 +12,7 @@ $orig = Get-Location
 
         # Backend thread
         Start-ThreadJob -Name "XTracker.Api" -ScriptBlock {
-            Set-Location "C:\Users\brent\Code\XTrack\backend\XTracker.Api"
+            Set-Location "..\backend\XTracker.Api"
             dotnet run
         } | Out-Null
 
@@ -31,7 +31,7 @@ $orig = Get-Location
         # Frontend thread (only if not already running)
         if (-not $frontendRunning) {
             Start-ThreadJob -Name "XTracker.Web" -ScriptBlock {
-                Set-Location "C:\Users\brent\Code\XTrack\frontend"
+                Set-Location "..\XTrack\frontend"
                 npm run dev
             } | Out-Null
         }
