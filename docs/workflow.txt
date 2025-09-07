@@ -1,31 +1,201 @@
-- User goes to home page 
-- User goes to "Workouts"
-- Users sees pre-defined list of workouts based on actual p90x workout list (similar to screenshot):
-    - Chest & Back
-    - Shoulders & Arms
-    - Legs & Back
-    - Chest, Shoulders & Triceps
-    - Back & Biceps
-    - Plyometrics
-    - Kenpo X
-    - Core Synergistics
-    - Ab Ripper X
-    - Yoga X
-    - X Stretch
-    - Cardio X
-- User can add/edit/modify this list if desired 
-- Next to each workout theres a "Log Workout" button
-- When you hit log workout, it opens up the detail page for that workout which lists all the exercies, just like you currently see on the detail page 
-- Each exercise shows last metrics (reps, weights, etc) from the previous time where you performed that workout 
-- If there are multiple sets of that exercise, we should just list the exercise twice. Example: 
-    - Pushups -- 10 pounds -- 5 reps 
-    - Pullups -- 12 reps 
-    - Lawn-Mowers -- 25 pounds -- 8 reps 
-    - Pushups -- 10 pouneds -- 10 reps
-    - etc. 
-- Submit button at the bottom of workout detail 
-- There are also needs to be some kind of way to view previous instances of that workout, so you can easily see your progress, or how you performed on a particular day 
-    - Have a second tab on the "Workouts Page", I.E. "History"
-    - Also want button "History" for each workout card on the main "Workouts" tab 
-- Should not be able to delete the pre-defined workouts. But users can delete custom workouts if they want.
-- User should be able to "hide" particular exercises in a workout. There should be some menu option to where you can unhide exercises.  
+# XTracker – P90X App Workflow (v2)
+
+## 1) Marketing Site (Landing) – `xtrackerfitness.com`
+
+**Description**
+Public site that explains the product and funnels visitors into the app.
+
+**Layout & Content**
+
+* Hero with tagline, short value prop, CTAs: **Sign Up Free**, **Log In**
+* Feature highlights (Logging, Templates, Progress)
+* Optional testimonials
+* Footer: Pricing, Support, Privacy, Terms
+
+**Flow**
+
+* **Sign Up Free** → create account → redirect `app.xtrackerfitness.com/workouts`
+* **Log In** → authenticate → redirect `app.xtrackerfitness.com/workouts`
+
+---
+
+## 2) App Entry – `app.xtrackerfitness.com`
+
+**Description**
+Authenticated app shell with a persistent sidebar.
+
+**Sidebar**
+Workouts · Templates · History · Exercises · Schedule · Statistics · Profile/Settings
+
+---
+
+## 3) Workouts Page
+
+**Description**
+The “home base” showing the workout cards the user has chosen to keep handy.
+
+**Layout & Content**
+
+* **Workout Card**
+
+  * Title, duration, #exercises, equipment, difficulty
+  * **Primary Button:** **Log Workout** (only visible button)
+  * **⋯ Card Menu:**
+
+    * **History** (workout-specific history list)
+    * **Edit Template** (opens template in Template Editor)
+    * **Remove** (removes card from Workouts page only; template remains)
+
+* **Add Workout** (global button)
+
+  * “Add from Template” modal → pick any template to show as a card
+
+**Behavior**
+Cards reflect the current version of their associated template. Removing a card does not delete the template.
+
+---
+
+## 4) Detail Page (Logging a Workout)
+
+**Description**
+Where a session is performed and logged; minimal clutter, autosave-first design.
+
+**Header**
+
+* Workout title, date/time
+* **Template Origin**: “From template: \[Template Name]” (view-only summary link)
+* **Finish** (primary) → marks complete and closes (see Finish logic below)
+* **⋯ Session Menu:**
+
+  * **Add Exercise** → opens Exercise Picker (from **Exercises** library) to insert into the current session; user selects destination **round** (or creates a new round)
+  * **Add Round** -> Lets user add a new round to group exerecises into. 
+  * **Save Changes To Template…** → prompts before saving structure back to the template (creates a new template version for future sessions)
+  * **Notes** → opens session-level notes panel
+  * **Clear Prefills** (this session)
+  * **Discard Session** (confirm)
+  * **Manage Hidden (Session)**
+
+**Notes Panel (Session-Level)**
+
+* **Last Session Notes** (read-only)
+* **Current Session Notes** (editable, autosaves)
+
+**Body: Rounds & Exercises**
+
+* Organized into **Rounds** (Round 1, Round 2, …)
+* **Exercise Rows** (fields shown depend on exercise type; all prefilled from last session where available):
+
+  * **Reps/Weight** exercises → Reps + Weight
+  * **Time-based** exercises → Time (mm\:ss)
+  * **Reps-only** exercises → Reps
+  * **Hybrid** exercises → any combination (Reps, Weight, Time)
+* **⋯ Row Menu:**
+
+  * **Hide** (hide this exercise for the current session only)
+  * **Notes** (per-exercise notes panel: last session vs current session)
+* **Movement & Order:**
+
+  * Drag handles to reorder within a round, move between rounds, and reorder rounds
+  * **No “Remove”** option on exercise rows (hide-only)
+
+**Autosave**
+All metric changes, order changes, and notes auto-save continuously.
+
+**Finish Logic**
+
+* On **Finish**, if **structural changes** were made in this session (any of: reordering rounds/exercises, adding exercises, hiding/unhiding exercises, creating/removing rounds) **and** the user hasn’t saved them to the template:
+
+  * Show prompt:
+
+    * **Save changes to template** (applies structure back to the template as a new version for future sessions), or
+    * **Don’t save** (complete the session; structure remains session-only), or
+    * **Cancel** (stay on Detail)
+* If no structural changes, Finish just marks complete and closes.
+
+---
+
+## 5) Workout Templates Page
+
+**Description**
+Hub for creating and editing workout templates (including P90X presets).
+
+**Layout & Content**
+
+* **Template List** (all templates, incl. original P90X)
+
+  * Actions: **Edit**, **Duplicate**, **Reset to Original (P90X)**
+* **Create Template:** **Start from Original P90X** (pristine) or **Start from Scratch**
+
+**Template Editor**
+
+* Drag/drop to add/remove/reorder **Rounds** and **Exercises**
+* Add from **Exercise Library**; set **exercise type** (Reps/Weight, Time, Reps-only, Hybrid)
+* Set defaults (targets, hidden by default, equipment)
+* Save → creates a **new template version** (future sessions use latest)
+
+---
+
+## 6) History Page
+
+**Description**
+Source of truth for what was actually performed—independent of later template edits.
+
+**Content**
+
+* **Global History** (chronological) with filters (workout, date range, notes search)
+* **Session Detail** (read-only): date/time, workout name, exact rounds & exercises performed, metrics (reps/weight/time), notes, totals (volume/duration)
+
+**Rule**
+History renders from the session snapshot; template changes never retro-edit past sessions.
+
+---
+
+## 7) Exercises Page (Library)
+
+**Description**
+Searchable library powering both Templates and the session **Add Exercise** flow.
+
+**Content**
+
+* Search/filter by name, type, tags, equipment
+* Exercise detail: description, cues, aliases, equipment
+* **Exercise Types** (determine fields on Detail): Reps/Weight · Time-based · Reps-only · Hybrid
+* User actions: add/edit/delete **custom** exercises
+
+---
+
+## 8) Schedule Page
+
+**Description**
+Planner + history navigator for P90X or custom programs.
+
+**Layout & Behavior**
+
+* Calendar grid by phases/weeks with assigned workouts
+* **Past date:**
+
+  * Logged → open that session in **History**
+  * Unlogged → option to **Log Retroactively** (opens Detail with that date)
+* **Today/Future date:** open **Detail** for logging (current template version)
+* Completed days auto-mark when a session finishes; missed days can shift
+
+---
+
+## 9) Statistics Page
+
+**Description**
+Analytics to visualize progress and consistency.
+
+**Content**
+Charts: volume (weight×reps), time-based improvements, adherence/frequency · Highlights: PRs, streaks, deltas
+
+---
+
+## 10) Rules & Constraints
+
+* **Autosave & Finish**: everything saves continuously; **Finish** closes and marks complete; if unsaved structural changes exist, prompt to “Save changes to template”
+* **Templates vs Sessions**: template editing mainly on Templates page; Detail has explicit **Save Changes To Template…** with confirm and versioning
+* **No Predefined vs Custom split**: all templates editable; P90X baselines can be reset to original
+* **Hidden vs No Remove**: exercise **Hide** is session-only; **Remove** is intentionally not offered on Detail
+* **Exercise Type Logic**: exercise type dictates which fields (Reps, Weight, Time) appear; hybrids can show multiple
+* **Unobtrusive Editing**: structural actions live behind ⋯ menus and drag handles to keep logging clean
