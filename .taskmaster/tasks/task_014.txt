@@ -1,0 +1,116 @@
+# Task ID: 14
+# Title: Implement Custom Workout Management System
+# Status: pending
+# Dependencies: 11, 12, 13
+# Priority: medium
+# Description: Create functionality for users to manage custom workouts alongside P90X workouts, including creation, editing, and template management features, with the ability to modify pre-defined P90X workout structures while preserving core content.
+# Details:
+1. Custom Workout Creation:
+   - Implement WorkoutTemplate model extension to support custom workouts
+   - Create form components for workout template creation
+   - Add exercise selection interface with search and filtering
+   - Implement drag-and-drop exercise reordering
+   - Add set/rep scheme configuration
+
+2. Template Management:
+   - Create template library view for saved workouts
+   - Implement template duplication functionality
+   - Add template categorization and tagging
+   - Create template sharing/export feature
+   - Implement template version history
+
+3. P90X Workout Modification:
+   - Add exercise insertion points in P90X workouts
+   - Implement exercise reordering within P90X routines
+   - Create validation to prevent core exercise deletion
+   - Add custom exercise sections to P90X templates
+   - Implement change tracking for modified P90X workouts
+
+4. User Interface Components:
+   - Create template builder component
+   - Implement exercise search and filter interface
+   - Add template preview functionality
+   - Create template management dashboard
+   - Implement batch operations for templates
+
+5. State Management:
+   - Implement template draft saving
+   - Add undo/redo functionality for template editing
+   - Create template validation system
+   - Implement optimistic updates for template changes
+   - Add conflict resolution for concurrent edits
+
+# Test Strategy:
+1. Unit Testing:
+   - Test template creation and validation logic
+   - Verify exercise ordering and grouping functions
+   - Test P90X workout modification restrictions
+   - Validate template versioning system
+   - Test state management functions
+
+2. Integration Testing:
+   - Verify template CRUD operations
+   - Test exercise search and filtering
+   - Validate template sharing functionality
+   - Test P90X workout modifications
+   - Verify template import/export features
+
+3. E2E Testing:
+   - Complete workflow for custom workout creation
+   - Test template management operations
+   - Verify P90X workout modification flow
+   - Test template sharing between users
+   - Validate template version control
+
+4. Performance Testing:
+   - Test template loading with large exercise lists
+   - Verify drag-and-drop performance
+   - Test concurrent template editing
+   - Measure template search response times
+
+5. Security Testing:
+   - Verify template access controls
+   - Test sharing permission enforcement
+   - Validate template modification authorization
+
+# Subtasks:
+## 1. Implement Custom Workout Template Model and Base Components [pending]
+### Dependencies: None
+### Description: Create the foundational data model for custom workouts and implement basic UI components for template creation
+### Details:
+1. Create WorkoutTemplate model with fields for name, description, category, exercises array, and metadata
+2. Implement form components for basic template information input
+3. Create exercise selection component with search functionality
+4. Add exercise card component for displaying selected exercises
+5. Implement basic state management for template creation
+
+## 2. Implement Template Management and Storage [pending]
+### Dependencies: 14.1
+### Description: Create functionality for saving, editing, and managing workout templates including categorization and version control
+### Details:
+1. Implement template storage service with CRUD operations
+2. Create template library view component with filtering and sorting
+3. Add template categorization and tagging system
+4. Implement template duplication functionality
+5. Add version history tracking for templates
+
+## 3. Implement P90X Workout Modification System [pending]
+### Dependencies: 14.1, 14.2
+### Description: Create functionality for modifying existing P90X workouts while preserving core content and tracking changes
+### Details:
+1. Implement P90X template modification rules
+2. Create exercise insertion and reordering functionality
+3. Add validation system for core exercise preservation
+4. Implement change tracking for modified P90X workouts
+5. Create modified template preview component
+
+## 4. Implement Advanced UI Features and State Management [pending]
+### Dependencies: 14.1, 14.2, 14.3
+### Description: Add advanced features including drag-and-drop, undo/redo, and template preview functionality
+### Details:
+1. Implement drag-and-drop exercise reordering
+2. Add undo/redo functionality for template editing
+3. Create template preview system
+4. Implement optimistic updates for template changes
+5. Add conflict resolution for concurrent edits
+

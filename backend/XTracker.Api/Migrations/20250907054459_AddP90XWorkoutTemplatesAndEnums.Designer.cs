@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using XTracker.Api.Common.Data;
@@ -11,9 +12,11 @@ using XTracker.Api.Common.Data;
 namespace XTracker.Api.Migrations
 {
     [DbContext(typeof(XTrackerDbContext))]
-    partial class XTrackerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250907054459_AddP90XWorkoutTemplatesAndEnums")]
+    partial class AddP90XWorkoutTemplatesAndEnums
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -1,0 +1,75 @@
+# Task ID: 15
+# Title: Implement Exercise Substitution System
+# Status: pending
+# Dependencies: 11, 12, 14
+# Priority: medium
+# Description: Create a comprehensive exercise substitution system that allows users to replace P90X workout exercises with alternatives based on equipment availability, difficulty level, physical limitations, space constraints, and personal preferences.
+# Details:
+1. Database Implementation:
+   - Create ExerciseSubstitution entity with fields: Id, OriginalExerciseId, SubstituteExerciseId, SubstitutionReason (enum), IntensityMatch (float), MuscleGroupMatch (float)
+   - Add junction tables for equipment requirements and space requirements
+   - Implement indexes for efficient substitution queries
+   - Add validation constraints for data integrity
+
+2. Core Substitution Logic:
+   - Implement SubstitutionService with methods for finding valid substitutions
+   - Create scoring algorithm for ranking substitutions based on:
+     * Muscle group targeting similarity (primary and secondary)
+     * Intensity level matching
+     * Equipment availability
+     * Space requirement compatibility
+   - Add validation rules to prevent inappropriate substitutions
+
+3. API Implementation:
+   - POST /api/exercises/{id}/substitutions - Get valid substitutions
+   - PUT /api/workouts/{id}/exercises/{exerciseId}/substitute - Apply substitution
+   - Include query parameters for filtering substitution reasons
+   - Implement caching for frequently requested substitutions
+
+4. Business Logic Layer:
+   - Create SubstitutionManager class to handle:
+     * Automatic substitution suggestions
+     * Validation of substitution chains
+     * Workout balance maintenance
+     * User preference processing
+   - Implement rules engine for substitution validation
+
+5. Integration Points:
+   - Add substitution UI components to workout detail view
+   - Implement substitution selection modal
+   - Create substitution history tracking
+   - Add substitution preference settings to user profile
+
+# Test Strategy:
+1. Unit Testing:
+   - Test substitution scoring algorithm accuracy
+   - Verify substitution validation rules
+   - Test equipment compatibility checks
+   - Validate intensity matching calculations
+   - Test muscle group targeting verification
+
+2. Integration Testing:
+   - Verify API endpoint functionality
+   - Test database query performance
+   - Validate substitution application workflow
+   - Test caching mechanism effectiveness
+   - Verify workout template updates
+
+3. User Interface Testing:
+   - Test substitution selection interface
+   - Verify substitution application feedback
+   - Validate error handling and user notifications
+   - Test accessibility compliance
+   - Verify mobile responsiveness
+
+4. Performance Testing:
+   - Benchmark substitution query performance
+   - Test system under load with multiple concurrent users
+   - Verify caching effectiveness
+   - Monitor database query execution plans
+
+5. Acceptance Testing:
+   - Verify substitution appropriateness for different scenarios
+   - Test end-to-end substitution workflows
+   - Validate substitution history tracking
+   - Test preference-based substitution suggestions

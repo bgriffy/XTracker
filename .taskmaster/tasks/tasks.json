@@ -443,74 +443,6 @@
         ]
       },
       {
-        "id": 8,
-        "title": "Add Workout Details and Notes Feature",
-        "description": "Implement detailed workout view with performance metrics and notes",
-        "details": "1. Create workout detail view component\n2. Implement reps and weight tracking UI\n3. Add notes editor component\n4. Create workout history view\n5. Implement performance tracking features",
-        "testStrategy": "1. Unit tests for metrics calculations\n2. Integration tests for notes persistence\n3. E2E tests for workout detail flow\n4. Usability testing for input mechanisms",
-        "priority": "medium",
-        "dependencies": [
-          5
-        ],
-        "status": "pending",
-        "subtasks": [
-          {
-            "id": 1,
-            "title": "Create Workout Detail View Component",
-            "description": "Develop a comprehensive UI component that displays all workout details including exercise information, sets, reps, and weights",
-            "dependencies": [],
-            "details": "Implement a responsive React component that displays workout metadata (date, type, duration) and exercise details. Include proper layout for mobile and desktop views. Use styled-components for styling and ensure accessibility compliance.",
-            "status": "pending",
-            "testStrategy": "Write unit tests using React Testing Library to verify component rendering. Test responsive behavior across different viewport sizes. Verify all workout data is properly displayed."
-          },
-          {
-            "id": 2,
-            "title": "Implement Reps and Weight Tracking UI",
-            "description": "Create interactive UI elements for tracking repetitions and weights for each exercise in a workout",
-            "dependencies": [
-              "8.1"
-            ],
-            "details": "Build form controls for inputting reps and weights with validation. Implement increment/decrement buttons for quick adjustments. Add visual indicators for personal records. Ensure data is properly formatted and validated before submission.",
-            "status": "pending",
-            "testStrategy": "Test input validation for numeric values. Verify increment/decrement functionality works correctly. Test form submission with various input combinations. Ensure personal record indicators display correctly."
-          },
-          {
-            "id": 3,
-            "title": "Add Notes Editor Component",
-            "description": "Implement a rich text editor for adding and editing workout notes with formatting options",
-            "dependencies": [
-              "8.1"
-            ],
-            "details": "Integrate a lightweight rich text editor (like Quill or Draft.js) for workout notes. Include basic formatting options (bold, italic, bullet points). Implement auto-save functionality. Ensure proper sanitization of user input to prevent XSS attacks.",
-            "status": "pending",
-            "testStrategy": "Test text formatting options work correctly. Verify auto-save functionality with simulated typing events. Test input sanitization for security vulnerabilities. Ensure notes persist correctly when navigating away and back."
-          },
-          {
-            "id": 4,
-            "title": "Create Workout History View",
-            "description": "Develop a historical view of past workouts with filtering and sorting capabilities",
-            "dependencies": [
-              "8.1"
-            ],
-            "details": "Implement a paginated list view of past workouts with date range filters. Add sorting options by date, workout type, and duration. Include search functionality for finding specific workouts. Create a calendar view option for visualizing workout frequency.",
-            "status": "pending",
-            "testStrategy": "Test pagination controls and verify correct number of items per page. Verify filters and sorting work as expected. Test search functionality with various queries. Ensure calendar view correctly highlights workout days."
-          },
-          {
-            "id": 5,
-            "title": "Implement Performance Tracking Features",
-            "description": "Add visualization and metrics for tracking workout performance over time",
-            "dependencies": [
-              "8.2",
-              "8.4"
-            ],
-            "details": "Create charts and graphs (using Chart.js or D3.js) to visualize performance trends. Implement metrics calculations for personal records, volume, and intensity. Add progress indicators comparing current performance to previous workouts. Ensure visualizations are responsive and accessible.",
-            "status": "pending",
-            "testStrategy": "Test metric calculations with various workout data scenarios. Verify charts render correctly with different data sets. Test responsive behavior of visualizations. Ensure accessibility features work with screen readers."
-          }
-        ]
-      },
-      {
         "id": 9,
         "title": "Implement Responsive Design and UI Polish",
         "description": "Enhance UI/UX with responsive design and styling improvements",
@@ -521,7 +453,7 @@
           5,
           6,
           7,
-          8
+          20
         ],
         "status": "pending",
         "subtasks": [
@@ -652,11 +584,400 @@
             "testStrategy": "Test debugging configurations by setting breakpoints and stepping through code. Verify all development utilities function as expected. Test API documentation for completeness."
           }
         ]
+      },
+      {
+        "id": 11,
+        "title": "Create P90X Workout Templates and Exercise Database",
+        "description": "Implement core P90X workout definitions for all 12 standard workouts and create a comprehensive exercise database with proper categorization, including data structures for tracking multiple sets within workouts.",
+        "details": "1. Design and implement Exercise entity with properties:\n   - ID, name, category, equipment required, difficulty level, muscle groups\n   - Description, form tips, video reference links\n   - Metadata for tracking (default rep ranges, weight tracking boolean)\n\n2. Create WorkoutTemplate entity:\n   - Template metadata (name, duration, difficulty, category)\n   - Ordered exercise sections with rest periods\n   - Exercise-to-template relationships with set/rep schemes\n   - Support for supersets and circuit training\n\n3. Implement P90X specific data:\n   - Define all 12 P90X workout templates (Chest & Back, Plyometrics, etc.)\n   - Create exercise categories matching P90X methodology\n   - Map exercises to appropriate workouts with correct sequencing\n   - Include warm-up and cool-down sections\n\n4. Database implementation:\n   - Create migrations for Exercise and WorkoutTemplate entities\n   - Implement repository pattern for both entities\n   - Create seed data for all P90X exercises and workouts\n   - Add indexes for efficient querying\n\n5. Add validation and business rules:\n   - Ensure exercise categorization consistency\n   - Validate workout template structure\n   - Implement exercise substitution rules\n   - Add data integrity constraints",
+        "testStrategy": "1. Database Schema Validation:\n   - Verify all required fields are present\n   - Test foreign key relationships\n   - Validate indexes for performance\n   - Check constraint enforcement\n\n2. Data Integrity Testing:\n   - Verify all 12 P90X workouts are correctly defined\n   - Validate exercise categorization\n   - Test workout template structure\n   - Ensure proper exercise-to-workout relationships\n\n3. Repository Layer Testing:\n   - Unit test all repository methods\n   - Test exercise and workout template CRUD operations\n   - Verify query performance with large datasets\n   - Test complex relationship queries\n\n4. Business Logic Validation:\n   - Verify exercise substitution rules\n   - Test workout template validation rules\n   - Validate set/rep scheme constraints\n   - Test data seeding process\n\n5. Integration Testing:\n   - End-to-end testing of exercise and workout template creation\n   - Verify relationship maintenance\n   - Test bulk operations\n   - Validate data consistency across operations",
+        "status": "done",
+        "dependencies": [
+          2,
+          3
+        ],
+        "priority": "high",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Design and Implement Exercise Entity",
+            "description": "Create the Exercise entity with all required properties and validation rules",
+            "dependencies": [],
+            "details": "Create Exercise class with properties: ID (GUID), name (string), category (enum), equipment (list), difficulty (enum), muscleGroups (list), description (string), formTips (string), videoLinks (list), defaultRepRange (range), isWeightTracked (bool). Add data annotations and implement IValidatableObject\n<info added on 2025-09-07T04:56:14.940Z>\nSuccessfully implemented Exercise entity with the following properties and features:\n- Base properties: ID (GUID), Name, Description\n- Categorization: Category enum, Difficulty enum\n- Muscle targeting: PrimaryMuscleGroups and SecondaryMuscleGroups lists\n- Equipment requirements list\n- Form guidance: FormTips, VideoUrl, ImageUrl\n- Default parameters: DefaultRepsMin, DefaultRepsMax, DefaultSets, DefaultDurationSeconds\n- Tracking flags: IsWeightTracked, IsTimeBased, IsDistanceTracked\n- Added computed properties for display formatting\n- Implemented data annotations and IValidatableObject interface with comprehensive validation rules\n- Added appropriate indexes and foreign key relationships\n- Configured entity mappings in DbContext\n</info added on 2025-09-07T04:56:14.940Z>",
+            "status": "done",
+            "testStrategy": "Unit tests for validation rules, property constraints, and entity behavior"
+          },
+          {
+            "id": 2,
+            "title": "Implement WorkoutTemplate Entity",
+            "description": "Create the WorkoutTemplate entity with support for exercise sections and rest periods",
+            "dependencies": [
+              "11.1"
+            ],
+            "details": "Create WorkoutTemplate class with properties: ID (GUID), name (string), duration (int), difficulty (enum), category (enum), sections (list of ExerciseSection), restPeriods (list of RestPeriod). Include support for supersets and circuits through SectionType enum\n<info added on 2025-09-07T04:56:21.950Z>\nCompleted implementation of WorkoutTemplate domain model with the following structure:\n- WorkoutTemplate entity with GUID ID, name, duration, difficulty level, and category\n- WorkoutTemplateSection entity for organizing exercises with section type support (regular, superset, circuit)\n- WorkoutTemplateExercise entity storing exercise references and ordering\n- Proper navigation properties and relationships between entities\n- Metadata fields for template categorization and filtering\n- Support for defining rest periods between sections\n- Enum definitions for difficulty levels and section types\n- Configuration for ordered exercise sequences within sections\n</info added on 2025-09-07T04:56:21.950Z>",
+            "status": "done",
+            "testStrategy": "Unit tests for template structure validation and relationship integrity"
+          },
+          {
+            "id": 3,
+            "title": "Create Database Context and Migrations",
+            "description": "Set up Entity Framework context and create initial migrations for Exercise and WorkoutTemplate entities",
+            "dependencies": [
+              "11.1",
+              "11.2"
+            ],
+            "details": "Create DbContext class, configure entity relationships, create initial migration, add indexes for name, category, and muscle groups. Implement repository interfaces and concrete implementations for both entities\n<info added on 2025-09-07T04:56:27.274Z>\nSuccessfully implemented database context with XTrackerDbContext class. Added entity configurations for WorkoutTemplate, WorkoutTemplateSection, and WorkoutTemplateExercise including proper relationships, foreign key constraints, and indexes for optimized querying. Created and applied AddP90XWorkoutTemplates migration with enum value conversions and cascade delete behaviors. Verified all entity relationships and constraints are properly configured in the database schema.\n</info added on 2025-09-07T04:56:27.274Z>",
+            "status": "done",
+            "testStrategy": "Integration tests for database operations and migration verification"
+          },
+          {
+            "id": 4,
+            "title": "Define P90X Exercise Categories and Data",
+            "description": "Create comprehensive exercise data structure for P90X program",
+            "dependencies": [
+              "11.1",
+              "11.3"
+            ],
+            "details": "Define exercise categories enum (Resistance, Cardio, Yoga, etc.), create seed data for all P90X exercises including proper categorization, equipment needs, and muscle group targeting. Implement as JSON seed files\n<info added on 2025-09-07T05:01:21.423Z>\nCompleted implementation of P90X exercise data structure and categorization. Created P90XExerciseDataComplete.cs containing comprehensive exercise definitions for all P90X workouts (Chest & Back, Shoulders & Arms, Legs & Back, Back & Biceps, Chest/Shoulders/Triceps, Plyometrics, Kenpo X, Core Synergistics, and Cardio X). Each exercise record includes:\n- Exercise category classification\n- Primary and secondary muscle group targeting\n- Required equipment specifications\n- Default rep ranges and set recommendations\n- Difficulty level ratings\n- Form guidance notes\n\nUpdated DatabaseSeeder to utilize the new exercise data structure. Enhanced muscle group enumeration to include Traps category and standardized all muscle group values across the exercise database.\n</info added on 2025-09-07T05:01:21.423Z>",
+            "status": "done",
+            "testStrategy": "Validation tests for data consistency and completeness"
+          },
+          {
+            "id": 5,
+            "title": "Create P90X Workout Templates",
+            "description": "Define all 12 P90X workout templates with proper exercise sequencing",
+            "dependencies": [
+              "11.2",
+              "11.4"
+            ],
+            "details": "Create template definitions for all P90X workouts (Chest & Back, Plyometrics, etc.) including warm-up and cool-down sections. Define exercise order, rest periods, and set/rep schemes. Implement as seed data\n<info added on 2025-09-07T05:08:35.094Z>\nImplemented P90XWorkoutTemplateBuilder.cs to generate comprehensive workout templates for all 12 P90X programs. Templates include detailed exercise sequencing, section organization, and workout parameters:\n\n- Chest & Back: Two main rounds plus bonus round, with push/pull exercise alternation\n- Shoulders & Arms: Five circuits with tricep/bicep/shoulder rotation\n- Legs & Back: Two circuits combining lower body exercises with pull-ups\n- Back & Biceps: Two rounds alternating back and bicep exercises\n- Chest, Shoulders & Triceps: Two rounds targeting upper body push muscles\n- Plyometrics: Progressive jumping circuit with defined rest intervals\n- Kenpo X: Martial arts combinations organized in fighting rounds\n- Core Synergistics: Full-body resistance moves in circuit format\n- Cardio X: Low-impact cardio intervals with defined work/rest periods\n- Yoga X: Structured flow from sun salutations through balance poses\n- X Stretch: Comprehensive flexibility routine by muscle group\n- Ab Ripper X: 11-exercise ab circuit with defined rep schemes\n\nEach template includes warm-up/cool-down sections, precise exercise sequencing, target rep ranges, weight tracking parameters, rest intervals, and required equipment. Template builder integrates with DatabaseSeeder for automated data population. All property mappings and enum values validated and corrected.\n</info added on 2025-09-07T05:08:35.094Z>",
+            "status": "done",
+            "testStrategy": "Verification tests for workout structure and exercise relationships"
+          },
+          {
+            "id": 6,
+            "title": "Implement Data Seeding Logic",
+            "description": "Create seeding mechanism for exercises and workout templates",
+            "dependencies": [
+              "11.3",
+              "11.4",
+              "11.5"
+            ],
+            "details": "Implement IDataSeeder interface, create seed data execution logic, add migration for seed data, implement idempotent seeding to handle updates. Include retry logic for database operations\n<info added on 2025-09-07T05:11:17.578Z>\nData seeding implementation completed with comprehensive validation and error handling. DatabaseSeeder.cs now includes robust error handling, logging, and validation for exercises and workout templates. Features dependency-aware seeding, duplicate detection, and detailed progress logging. SeedingService.cs provides interface-based injection with methods for status checks and seeding operations. REST API endpoints implemented in SeedingController.cs for seeding operations including status checks, initial seeding, and reseeding capabilities. System validates exercise data (rep ranges, duplicates, required fields), template data (sections, exercises, parameters), and maintains proper dependency order. Implementation includes comprehensive error reporting, logging, migration support, and development-friendly API endpoints. All seeding operations are idempotent with retry logic for database operations.\n</info added on 2025-09-07T05:11:17.578Z>",
+            "status": "done",
+            "testStrategy": "Integration tests for seeding process and data integrity checks"
+          },
+          {
+            "id": 8,
+            "title": "Implement Template Validation Service",
+            "description": "Create service for validating workout template structure and exercise relationships",
+            "dependencies": [
+              "11.2",
+              "11.5"
+            ],
+            "details": "Create ITemplateValidationService, implement validation for exercise sequencing, rest periods, superset compatibility, and substitution rules. Add template integrity checks and validation error reporting\n<info added on 2025-09-07T05:21:22.393Z>\nImplementation completed. Validation service components created and tested:\n\nTemplateValidationResult model with comprehensive validation types and messaging system. ITemplateValidationService interface and concrete implementation handling template properties, section validation, exercise validation, workout structure validation, and P90X-specific rules. Validation covers exercise sequencing, rest periods, superset compatibility, and substitution rules.\n\nREST API endpoints implemented for all validation operations including template, section, exercise, structure, and P90X-specific validation. Features include detailed error reporting, warning system, template consistency checking, and smart similarity detection using Levenshtein distance.\n\nService provides validation for:\n- Template metadata (name, duration, category, difficulty)\n- Section properties (name, order, type, rest periods)\n- Exercise parameters (existence, configuration, sequencing)\n- Workout structure (duration, muscle balance, equipment requirements)\n- P90X-specific rules (naming conventions, duration standards, equipment needs)\n- Cross-template consistency\n\nAll validation operations include detailed error messages, fix suggestions, warnings for potential issues, and confirmation messages for successful validation. System is production-ready with comprehensive error handling and logging.\n</info added on 2025-09-07T05:21:22.393Z>",
+            "status": "done",
+            "testStrategy": "Unit tests for validation rules and integration tests for complete template validation"
+          }
+        ]
+      },
+      {
+        "id": 12,
+        "title": "Implement P90X Workout Logging Interface",
+        "description": "Create the main P90X workouts page with workout logging capabilities, including a detailed workout view for exercise tracking and performance history visualization.",
+        "details": "1. Create P90X Workouts List Page:\n   - Implement grid/list view of pre-defined P90X workouts from templates\n   - Add \"Log Workout\" button for each workout\n   - Display workout duration, difficulty, and category\n   - Show last completion date if applicable\n\n2. Build Workout Detail Page:\n   - Create dynamic route for /workouts/[workout-id]\n   - Display exercise list with previous performance metrics\n   - Implement collapsible sections for workout phases\n   - Show exercise details (form tips, video links) from exercise database\n\n3. Implement Set Logging Interface:\n   - Create dynamic form components for different exercise types\n   - Support multiple sets per exercise with reps/weight tracking\n   - Add \"Add Set\" functionality with proper validation\n   - Implement real-time performance comparison with previous workout\n\n4. Add Performance History Features:\n   - Create performance timeline component per exercise\n   - Implement progress charts for weight/reps over time\n   - Add personal best indicators\n   - Include notes/comments section per workout\n\n5. State Management:\n   - Implement proper state management for form data\n   - Handle optimistic updates for better UX\n   - Cache previous workout data for quick reference\n   - Manage loading and error states\n\n6. Mobile Optimization:\n   - Ensure responsive design for all components\n   - Optimize touch interactions for set logging\n   - Implement swipe gestures for navigation\n   - Create compact view for exercise history",
+        "testStrategy": "1. Unit Testing:\n   - Test form validation logic for set logging\n   - Verify performance calculation functions\n   - Test state management logic\n   - Validate exercise data display components\n\n2. Integration Testing:\n   - Test workout template loading from API\n   - Verify workout logging flow end-to-end\n   - Test performance history data retrieval\n   - Validate exercise database integration\n\n3. UI/UX Testing:\n   - Verify responsive design across devices\n   - Test touch interactions on mobile devices\n   - Validate form accessibility\n   - Check performance with large exercise sets\n\n4. Performance Testing:\n   - Load testing with multiple workout histories\n   - Verify caching mechanisms\n   - Test chart rendering performance\n   - Measure page load times with full data\n\n5. User Acceptance Testing:\n   - Verify workout logging workflow\n   - Test exercise history visualization\n   - Validate performance tracking accuracy\n   - Check mobile usability",
+        "status": "done",
+        "dependencies": [
+          11,
+          5,
+          20,
+          7
+        ],
+        "priority": "high",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create P90X Workout List Component",
+            "description": "Implement the main workout list view showing all P90X workouts with basic information and logging capabilities",
+            "dependencies": [],
+            "details": "Create a responsive grid/list component using CSS Grid/Flexbox, implement workout card components showing duration/difficulty/category, fetch workout templates from API, add last completion date logic, implement 'Log Workout' button with proper routing",
+            "status": "done",
+            "testStrategy": "Unit test workout card rendering, test API integration, verify responsive layout, test routing functionality"
+          },
+          {
+            "id": 2,
+            "title": "Implement Workout Detail View",
+            "description": "Build the detailed workout view page showing exercise breakdown and logging interface",
+            "dependencies": [
+              "12.1"
+            ],
+            "details": "Set up dynamic routing with workout-id parameter, create collapsible section components for workout phases, implement exercise list with previous metrics display, integrate exercise details display with form tips and video links",
+            "status": "done",
+            "testStrategy": "Test route parameter handling, verify collapsible sections behavior, test exercise data display, verify video link integration"
+          },
+          {
+            "id": 3,
+            "title": "Develop Set Logging System",
+            "description": "Create the interface for logging individual exercise sets with various input types",
+            "dependencies": [
+              "12.2"
+            ],
+            "details": "Build dynamic form components for different exercise types (reps, weights, time), implement multi-set tracking with validation, add real-time comparison with previous workout data, create set addition/removal functionality",
+            "status": "done",
+            "testStrategy": "Unit test form validation, test set management logic, verify real-time comparison calculations"
+          },
+          {
+            "id": 4,
+            "title": "Implement Performance History Visualization",
+            "description": "Create components for displaying historical performance data and progress tracking",
+            "dependencies": [
+              "12.3"
+            ],
+            "details": "Implement performance timeline component using a charting library, create progress visualization for weight/reps trends, add personal best indicators, implement notes/comments functionality with proper storage",
+            "status": "done",
+            "testStrategy": "Test chart rendering, verify data calculations, test notes/comments CRUD operations"
+          },
+          {
+            "id": 5,
+            "title": "Set Up State Management",
+            "description": "Implement comprehensive state management for workout logging and data handling",
+            "dependencies": [
+              "12.3",
+              "12.4"
+            ],
+            "details": "Configure state management solution (Redux/Context), implement form data handling, add optimistic updates for logging actions, set up caching for previous workout data, handle loading/error states",
+            "status": "done",
+            "testStrategy": "Unit test state reducers, verify optimistic updates, test error handling, verify cache management"
+          },
+          {
+            "id": 6,
+            "title": "Optimize Mobile Experience",
+            "description": "Enhance the interface for optimal mobile usage with touch-friendly interactions",
+            "dependencies": [
+              "12.5"
+            ],
+            "details": "Implement responsive layouts for all components, optimize touch targets for mobile use, add swipe gestures for navigation, create compact view modes for exercise history, ensure smooth performance on mobile devices",
+            "status": "done",
+            "testStrategy": "Test touch interactions, verify responsive layouts, perform mobile performance testing, test gesture handling"
+          }
+        ]
+      },
+      {
+        "id": 13,
+        "title": "Implement Workout History and Progress Tracking Interface",
+        "description": "Create a comprehensive workout history interface with filtering, sorting, and progress tracking capabilities, including a dedicated History tab and individual workout history views with exercise visibility management.",
+        "details": "1. Create History Tab Component:\n   - Implement tab navigation in workouts page\n   - Design responsive grid/list view for workout history\n   - Add date range picker for filtering\n   - Implement sorting by date, workout type, duration\n   - Add search functionality for workout names/notes\n\n2. Individual Workout History View:\n   - Create detailed history view component for each workout type\n   - Implement progress charts showing performance metrics over time\n   - Add exercise-specific history tracking\n   - Display trend analysis for weights, reps, and duration\n   - Include comparison view between workout instances\n\n3. Exercise Management Interface:\n   - Create exercise visibility toggle component\n   - Implement persistent exercise visibility preferences\n   - Add bulk actions for show/hide operations\n   - Create exercise organization interface\n   - Store visibility settings in user preferences\n\n4. Data Management:\n   - Implement client-side caching for performance\n   - Add pagination for large history sets\n   - Create data aggregation utilities for progress metrics\n   - Implement export functionality for workout data\n   - Add data filtering hooks and utilities\n\n5. State Management:\n   - Design Redux slices for history management\n   - Implement optimistic updates for visibility toggles\n   - Create action creators for history operations\n   - Add error handling and recovery mechanisms",
+        "testStrategy": "1. Unit Testing:\n   - Test history filtering and sorting functions\n   - Verify date range calculations\n   - Test progress calculation algorithms\n   - Validate exercise visibility toggle logic\n   - Test state management functions\n\n2. Integration Testing:\n   - Verify history data loading and pagination\n   - Test exercise visibility persistence\n   - Validate progress tracking calculations\n   - Test data export functionality\n   - Verify filter/sort combinations\n\n3. End-to-End Testing:\n   - Complete workflow for viewing workout history\n   - Test exercise visibility management\n   - Verify progress tracking accuracy\n   - Test responsive design across devices\n   - Validate sorting and filtering operations\n\n4. Performance Testing:\n   - Measure load times with large datasets\n   - Test caching effectiveness\n   - Verify smooth scrolling with pagination\n   - Monitor memory usage with extensive history\n   - Test concurrent operations handling",
+        "status": "pending",
+        "dependencies": [
+          5,
+          7,
+          20,
+          12
+        ],
+        "priority": "medium",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Implement History Tab Base Component and Navigation",
+            "description": "Create the foundational History tab component with basic navigation and layout structure, including responsive grid/list view toggle and initial routing setup",
+            "dependencies": [],
+            "details": "Create HistoryTab component using React Router for navigation, implement responsive container layout with CSS Grid/Flexbox, add MaterialUI TabPanel integration, create basic grid/list view components with toggle functionality, implement skeleton loading state",
+            "status": "pending",
+            "testStrategy": "Unit test tab navigation logic, test responsive layout breakpoints, verify route handling, test view toggle functionality"
+          },
+          {
+            "id": 2,
+            "title": "Implement History Filtering and Search System",
+            "description": "Add comprehensive filtering system including date range picker, workout type filter, and search functionality for workout names and notes",
+            "dependencies": [
+              "13.1"
+            ],
+            "details": "Implement DateRangePicker component, create FilterBar component with workout type selector, add debounced search input, create filter utility functions, implement filter state management with Redux, add URL query param synchronization",
+            "status": "pending",
+            "testStrategy": "Unit test filter logic, test search debouncing, verify date range calculations, test filter state management"
+          },
+          {
+            "id": 3,
+            "title": "Create Individual Workout History View",
+            "description": "Implement detailed view for individual workout history with progress charts and performance metrics",
+            "dependencies": [
+              "13.1",
+              "13.2"
+            ],
+            "details": "Create WorkoutHistoryDetail component, integrate Chart.js for progress visualization, implement performance metrics calculations, add trend analysis components, create comparison view logic, implement exercise-specific history tracking",
+            "status": "pending",
+            "testStrategy": "Test metric calculations, verify chart data transformations, test comparison logic, verify exercise history tracking"
+          },
+          {
+            "id": 4,
+            "title": "Implement Exercise Visibility Management",
+            "description": "Create system for managing exercise visibility preferences with persistent storage",
+            "dependencies": [
+              "13.3"
+            ],
+            "details": "Create ExerciseVisibilityManager component, implement visibility toggle actions and reducers, add local storage persistence, create bulk action handlers, implement visibility preference sync with backend",
+            "status": "pending",
+            "testStrategy": "Test visibility toggle logic, verify persistence mechanism, test bulk actions, verify preference sync"
+          },
+          {
+            "id": 5,
+            "title": "Implement Data Management and Performance Optimization",
+            "description": "Add data management features including pagination, caching, and data export functionality",
+            "dependencies": [
+              "13.2",
+              "13.3",
+              "13.4"
+            ],
+            "details": "Implement virtual scrolling for large datasets, add client-side caching using RTK Query, create data export utilities for CSV/JSON formats, implement data aggregation functions, add error boundary handling",
+            "status": "pending",
+            "testStrategy": "Test pagination logic, verify cache mechanisms, test export functionality, performance testing for large datasets"
+          }
+        ]
+      },
+      {
+        "id": 14,
+        "title": "Implement Custom Workout Management System",
+        "description": "Create functionality for users to manage custom workouts alongside P90X workouts, including creation, editing, and template management features, with the ability to modify pre-defined P90X workout structures while preserving core content.",
+        "details": "1. Custom Workout Creation:\n   - Implement WorkoutTemplate model extension to support custom workouts\n   - Create form components for workout template creation\n   - Add exercise selection interface with search and filtering\n   - Implement drag-and-drop exercise reordering\n   - Add set/rep scheme configuration\n\n2. Template Management:\n   - Create template library view for saved workouts\n   - Implement template duplication functionality\n   - Add template categorization and tagging\n   - Create template sharing/export feature\n   - Implement template version history\n\n3. P90X Workout Modification:\n   - Add exercise insertion points in P90X workouts\n   - Implement exercise reordering within P90X routines\n   - Create validation to prevent core exercise deletion\n   - Add custom exercise sections to P90X templates\n   - Implement change tracking for modified P90X workouts\n\n4. User Interface Components:\n   - Create template builder component\n   - Implement exercise search and filter interface\n   - Add template preview functionality\n   - Create template management dashboard\n   - Implement batch operations for templates\n\n5. State Management:\n   - Implement template draft saving\n   - Add undo/redo functionality for template editing\n   - Create template validation system\n   - Implement optimistic updates for template changes\n   - Add conflict resolution for concurrent edits",
+        "testStrategy": "1. Unit Testing:\n   - Test template creation and validation logic\n   - Verify exercise ordering and grouping functions\n   - Test P90X workout modification restrictions\n   - Validate template versioning system\n   - Test state management functions\n\n2. Integration Testing:\n   - Verify template CRUD operations\n   - Test exercise search and filtering\n   - Validate template sharing functionality\n   - Test P90X workout modifications\n   - Verify template import/export features\n\n3. E2E Testing:\n   - Complete workflow for custom workout creation\n   - Test template management operations\n   - Verify P90X workout modification flow\n   - Test template sharing between users\n   - Validate template version control\n\n4. Performance Testing:\n   - Test template loading with large exercise lists\n   - Verify drag-and-drop performance\n   - Test concurrent template editing\n   - Measure template search response times\n\n5. Security Testing:\n   - Verify template access controls\n   - Test sharing permission enforcement\n   - Validate template modification authorization",
+        "status": "pending",
+        "dependencies": [
+          11,
+          12,
+          13
+        ],
+        "priority": "medium",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Implement Custom Workout Template Model and Base Components",
+            "description": "Create the foundational data model for custom workouts and implement basic UI components for template creation",
+            "dependencies": [],
+            "details": "1. Create WorkoutTemplate model with fields for name, description, category, exercises array, and metadata\n2. Implement form components for basic template information input\n3. Create exercise selection component with search functionality\n4. Add exercise card component for displaying selected exercises\n5. Implement basic state management for template creation",
+            "status": "pending",
+            "testStrategy": "1. Unit tests for WorkoutTemplate model validation\n2. Component tests for form validation and submission\n3. Integration tests for exercise search functionality\n4. Snapshot tests for UI components"
+          },
+          {
+            "id": 2,
+            "title": "Implement Template Management and Storage",
+            "description": "Create functionality for saving, editing, and managing workout templates including categorization and version control",
+            "dependencies": [
+              "14.1"
+            ],
+            "details": "1. Implement template storage service with CRUD operations\n2. Create template library view component with filtering and sorting\n3. Add template categorization and tagging system\n4. Implement template duplication functionality\n5. Add version history tracking for templates",
+            "status": "pending",
+            "testStrategy": "1. Unit tests for template CRUD operations\n2. Integration tests for template storage service\n3. E2E tests for template management workflow\n4. Performance tests for template library loading"
+          },
+          {
+            "id": 3,
+            "title": "Implement P90X Workout Modification System",
+            "description": "Create functionality for modifying existing P90X workouts while preserving core content and tracking changes",
+            "dependencies": [
+              "14.1",
+              "14.2"
+            ],
+            "details": "1. Implement P90X template modification rules\n2. Create exercise insertion and reordering functionality\n3. Add validation system for core exercise preservation\n4. Implement change tracking for modified P90X workouts\n5. Create modified template preview component",
+            "status": "pending",
+            "testStrategy": "1. Unit tests for P90X modification rules\n2. Integration tests for change tracking system\n3. Validation tests for core exercise preservation\n4. User acceptance tests for modification workflow"
+          },
+          {
+            "id": 4,
+            "title": "Implement Advanced UI Features and State Management",
+            "description": "Add advanced features including drag-and-drop, undo/redo, and template preview functionality",
+            "dependencies": [
+              "14.1",
+              "14.2",
+              "14.3"
+            ],
+            "details": "1. Implement drag-and-drop exercise reordering\n2. Add undo/redo functionality for template editing\n3. Create template preview system\n4. Implement optimistic updates for template changes\n5. Add conflict resolution for concurrent edits",
+            "status": "pending",
+            "testStrategy": "1. Unit tests for state management functions\n2. Integration tests for drag-and-drop functionality\n3. E2E tests for template editing workflow\n4. Performance tests for state management operations"
+          }
+        ]
+      },
+      {
+        "id": 15,
+        "title": "Implement Exercise Substitution System",
+        "description": "Create a comprehensive exercise substitution system that allows users to replace P90X workout exercises with alternatives based on equipment availability, difficulty level, physical limitations, space constraints, and personal preferences.",
+        "details": "1. Database Implementation:\n   - Create ExerciseSubstitution entity with fields: Id, OriginalExerciseId, SubstituteExerciseId, SubstitutionReason (enum), IntensityMatch (float), MuscleGroupMatch (float)\n   - Add junction tables for equipment requirements and space requirements\n   - Implement indexes for efficient substitution queries\n   - Add validation constraints for data integrity\n\n2. Core Substitution Logic:\n   - Implement SubstitutionService with methods for finding valid substitutions\n   - Create scoring algorithm for ranking substitutions based on:\n     * Muscle group targeting similarity (primary and secondary)\n     * Intensity level matching\n     * Equipment availability\n     * Space requirement compatibility\n   - Add validation rules to prevent inappropriate substitutions\n\n3. API Implementation:\n   - POST /api/exercises/{id}/substitutions - Get valid substitutions\n   - PUT /api/workouts/{id}/exercises/{exerciseId}/substitute - Apply substitution\n   - Include query parameters for filtering substitution reasons\n   - Implement caching for frequently requested substitutions\n\n4. Business Logic Layer:\n   - Create SubstitutionManager class to handle:\n     * Automatic substitution suggestions\n     * Validation of substitution chains\n     * Workout balance maintenance\n     * User preference processing\n   - Implement rules engine for substitution validation\n\n5. Integration Points:\n   - Add substitution UI components to workout detail view\n   - Implement substitution selection modal\n   - Create substitution history tracking\n   - Add substitution preference settings to user profile",
+        "testStrategy": "1. Unit Testing:\n   - Test substitution scoring algorithm accuracy\n   - Verify substitution validation rules\n   - Test equipment compatibility checks\n   - Validate intensity matching calculations\n   - Test muscle group targeting verification\n\n2. Integration Testing:\n   - Verify API endpoint functionality\n   - Test database query performance\n   - Validate substitution application workflow\n   - Test caching mechanism effectiveness\n   - Verify workout template updates\n\n3. User Interface Testing:\n   - Test substitution selection interface\n   - Verify substitution application feedback\n   - Validate error handling and user notifications\n   - Test accessibility compliance\n   - Verify mobile responsiveness\n\n4. Performance Testing:\n   - Benchmark substitution query performance\n   - Test system under load with multiple concurrent users\n   - Verify caching effectiveness\n   - Monitor database query execution plans\n\n5. Acceptance Testing:\n   - Verify substitution appropriateness for different scenarios\n   - Test end-to-end substitution workflows\n   - Validate substitution history tracking\n   - Test preference-based substitution suggestions",
+        "status": "pending",
+        "dependencies": [
+          11,
+          12,
+          14
+        ],
+        "priority": "medium",
+        "subtasks": []
+      },
+      {
+        "id": 20,
+        "title": "Add Workout Details and Notes Feature",
+        "description": "Implement detailed workout view with performance metrics and notes",
+        "details": "1. Create workout detail view component\n2. Implement reps and weight tracking UI\n3. Add notes editor component\n4. Create workout history view\n5. Implement performance tracking features",
+        "testStrategy": "1. Unit tests for metrics calculations\n2. Integration tests for notes persistence\n3. E2E tests for workout detail flow\n4. Usability testing for input mechanisms",
+        "priority": "medium",
+        "dependencies": [
+          5
+        ],
+        "status": "deferred",
+        "subtasks": [
+          {
+            "id": 2,
+            "title": "Implement Reps and Weight Tracking UI",
+            "description": "Create interactive UI elements for tracking repetitions and weights for each exercise in a workout",
+            "dependencies": [],
+            "details": "Build form controls for inputting reps and weights with validation. Implement increment/decrement buttons for quick adjustments. Add visual indicators for personal records. Ensure data is properly formatted and validated before submission.",
+            "status": "pending",
+            "testStrategy": "Test input validation for numeric values. Verify increment/decrement functionality works correctly. Test form submission with various input combinations. Ensure personal record indicators display correctly."
+          },
+          {
+            "id": 3,
+            "title": "Add Notes Editor Component",
+            "description": "Implement a rich text editor for adding and editing workout notes with formatting options",
+            "dependencies": [],
+            "details": "Integrate a lightweight rich text editor (like Quill or Draft.js) for workout notes. Include basic formatting options (bold, italic, bullet points). Implement auto-save functionality. Ensure proper sanitization of user input to prevent XSS attacks.",
+            "status": "pending",
+            "testStrategy": "Test text formatting options work correctly. Verify auto-save functionality with simulated typing events. Test input sanitization for security vulnerabilities. Ensure notes persist correctly when navigating away and back."
+          },
+          {
+            "id": 4,
+            "title": "Create Workout History View",
+            "description": "Develop a historical view of past workouts with filtering and sorting capabilities",
+            "dependencies": [],
+            "details": "Implement a paginated list view of past workouts with date range filters. Add sorting options by date, workout type, and duration. Include search functionality for finding specific workouts. Create a calendar view option for visualizing workout frequency.",
+            "status": "pending",
+            "testStrategy": "Test pagination controls and verify correct number of items per page. Verify filters and sorting work as expected. Test search functionality with various queries. Ensure calendar view correctly highlights workout days."
+          },
+          {
+            "id": 5,
+            "title": "Implement Performance Tracking Features",
+            "description": "Add visualization and metrics for tracking workout performance over time",
+            "dependencies": [
+              "20.2",
+              "20.4"
+            ],
+            "details": "Create charts and graphs (using Chart.js or D3.js) to visualize performance trends. Implement metrics calculations for personal records, volume, and intensity. Add progress indicators comparing current performance to previous workouts. Ensure visualizations are responsive and accessible.",
+            "status": "pending",
+            "testStrategy": "Test metric calculations with various workout data scenarios. Verify charts render correctly with different data sets. Test responsive behavior of visualizations. Ensure accessibility features work with screen readers."
+          },
+          {
+            "id": 6,
+            "title": "Create Workout Detail View Component",
+            "description": "Develop a comprehensive UI component that displays all workout details including exercise information, sets, reps, and weights",
+            "details": "Implement a responsive React component that displays workout metadata (date, type, duration) and exercise details. Include proper layout for mobile and desktop views. Use styled-components for styling and ensure accessibility compliance.",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 8
+          }
+        ]
       }
     ],
     "metadata": {
       "created": "2025-08-10T18:29:31.112Z",
-      "updated": "2025-09-07T02:30:15.052Z",
+      "updated": "2025-09-07T07:49:00.964Z",
       "description": "Tasks for master context"
     }
   }

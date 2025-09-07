@@ -1,0 +1,19 @@
+# Task ID: 1
+# Title: Setup .NET 8 Backend with Vertical Slice Architecture
+# Status: completed
+# Dependencies: None
+# Priority: high
+# Description: Initialize .NET 8 Web API project with Vertical Slice Architecture, configure PostgreSQL connection, and set up Docker development environment
+# Details:
+1. Create new .NET 8 Web API project
+2. Set up folder structure for vertical slices (Features/Workouts, Features/Schedule, Features/Stats)
+3. Configure PostgreSQL connection using Entity Framework Core
+4. Create Docker compose file for local Postgres instance
+5. Implement basic middleware (error handling, logging)
+6. Set up dependency injection container
+
+# Test Strategy:
+1. Verify Docker container starts successfully
+2. Test database connection
+3. Validate folder structure follows VSA principles
+4. Unit test middleware components

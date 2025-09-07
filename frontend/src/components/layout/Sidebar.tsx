@@ -14,6 +14,8 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
   const navigation = [
     { name: 'Dashboard', href: '/', icon: '🏠' },
     { name: 'Workouts', href: '/workouts', icon: '💪' },
+    { name: 'P90X Library', href: '/p90x', icon: '🔥' },
+    { name: 'History', href: '/workouts/history', icon: '📈' },
     { name: 'Schedule', href: '/schedule', icon: '📅' },
     { name: 'Statistics', href: '/stats', icon: '📊' },
     { name: 'Exercises', href: '/exercises', icon: '🏋️' },

@@ -32,10 +32,14 @@ public class WorkoutRepository : IWorkoutRepository
 
     public async Task<IEnumerable<Workout>> GetByDateRangeAsync(DateTime startDate, DateTime endDate)
     {
+        // Ensure dates are in UTC for proper comparison
+        var utcStartDate = DateTime.SpecifyKind(startDate, DateTimeKind.Utc);
+        var utcEndDate = DateTime.SpecifyKind(endDate, DateTimeKind.Utc);
+        
         return await _context.Workouts
             .Include(w => w.WorkoutExercises)
             .ThenInclude(we => we.Exercise)
-            .Where(w => w.Date >= startDate && w.Date <= endDate)
+            .Where(w => w.Date >= utcStartDate && w.Date <= utcEndDate)
             .OrderByDescending(w => w.Date)
             .ToListAsync();
     }

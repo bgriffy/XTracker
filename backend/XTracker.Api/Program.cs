@@ -4,6 +4,7 @@ using XTracker.Api.Common.Middleware;
 using XTracker.Api.Features.Workouts.Repositories;
 using XTracker.Api.Features.Workouts.Validators;
 using XTracker.Api.Features.Workouts.Mapping;
+using XTracker.Api.Features.Workouts.Services;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Serilog;
@@ -30,6 +31,12 @@ builder.Services.AddDbContext<XTrackerDbContext>(options =>
 // Register repositories
 builder.Services.AddScoped<IWorkoutRepository, WorkoutRepository>();
 builder.Services.AddScoped<IExerciseRepository, ExerciseRepository>();
+
+// Register seeding service
+builder.Services.AddScoped<ISeedingService, SeedingService>();
+
+// Register validation services
+builder.Services.AddScoped<ITemplateValidationService, TemplateValidationService>();
 
 // Register MediatR
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
@@ -61,7 +68,8 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<XTrackerDbContext>();
-    await DatabaseSeeder.SeedAsync(context);
+    var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+    await DatabaseSeeder.SeedAsync(context, logger);
 }
 
 // Configure the HTTP request pipeline.

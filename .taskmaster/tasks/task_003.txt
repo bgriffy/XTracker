@@ -1,0 +1,50 @@
+# Task ID: 3
+# Title: Implement Workout API Endpoints
+# Status: completed
+# Dependencies: 2
+# Priority: high
+# Description: Create REST endpoints for workout CRUD operations using Vertical Slice Architecture
+# Details:
+1. Implement endpoints: POST /workouts, GET /workouts, GET /workouts/{id}, PUT /workouts/{id}, DELETE /workouts/{id}
+2. Create request/response DTOs
+3. Implement validation using FluentValidation
+4. Add mapping profiles using AutoMapper
+5. Implement feature handlers following CQRS pattern
+
+# Test Strategy:
+1. Integration tests for each endpoint
+2. Validation testing for request DTOs
+3. Test error handling scenarios
+4. Performance testing for basic load
+
+# Subtasks:
+## 1. Create Request/Response DTOs for Workout API [pending]
+### Dependencies: None
+### Description: Define data transfer objects for all workout endpoints including creation, retrieval, update, and deletion operations
+### Details:
+Create WorkoutCreateDto, WorkoutUpdateDto, WorkoutResponseDto, and WorkoutListResponseDto classes with appropriate properties matching the domain model. Include pagination parameters for list endpoint.
+
+## 2. Implement FluentValidation for Workout DTOs [pending]
+### Dependencies: 3.1
+### Description: Create validation rules for all workout request DTOs using FluentValidation library
+### Details:
+Create WorkoutCreateDtoValidator and WorkoutUpdateDtoValidator classes with appropriate validation rules for required fields, string lengths, numeric ranges, and date validations. Register validators in DI container.
+
+## 3. Configure AutoMapper Profiles for Workout Entities [pending]
+### Dependencies: 3.1
+### Description: Create mapping profiles between domain entities and DTOs for the workout feature
+### Details:
+Create WorkoutMappingProfile class inheriting from Profile. Define bidirectional mappings between Workout entity and DTOs. Handle nested object mappings and collection mappings if needed.
+
+## 4. Implement CQRS Handlers for Workout Operations [pending]
+### Dependencies: 3.1, 3.2, 3.3
+### Description: Create command and query handlers for all workout CRUD operations following Vertical Slice Architecture
+### Details:
+Create CreateWorkoutCommand, GetWorkoutsQuery, GetWorkoutByIdQuery, UpdateWorkoutCommand, and DeleteWorkoutCommand classes with corresponding handlers. Implement business logic, validation, and persistence operations in each handler.
+
+## 5. Create REST API Controllers for Workout Endpoints [pending]
+### Dependencies: 3.4
+### Description: Implement API controller with endpoints for workout CRUD operations
+### Details:
+Create WorkoutsController with POST, GET (list), GET (by id), PUT, and DELETE actions. Use MediatR to dispatch commands and queries to appropriate handlers. Implement proper HTTP status codes, response formatting, and error handling.
+

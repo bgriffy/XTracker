@@ -109,4 +109,85 @@ export const exerciseService = {
   },
 };
 
+// Workout Template types
+export interface WorkoutTemplate {
+  id: number;
+  name: string;
+  description: string;
+  category: string;
+  difficulty: string;
+  estimatedDurationMinutes: number;
+  equipment: string;
+  instructions: string;
+  isP90XWorkout: boolean;
+  exerciseCount: number;
+  sectionCount: number;
+}
+
+export interface WorkoutTemplateSection {
+  id: number;
+  name: string;
+  description: string;
+  type: string;
+  order: number;
+  instructions: string;
+  restPeriodSeconds: number;
+  exercises: WorkoutTemplateExercise[];
+}
+
+export interface WorkoutTemplateExercise {
+  id: number;
+  order: number;
+  sets: number;
+  reps: number;
+  weight?: number;
+  duration?: number;
+  restPeriodSeconds?: number;
+  notes?: string;
+  exercise: {
+    id: number;
+    name: string;
+    description: string;
+    category: string;
+    difficulty: string;
+    primaryMuscleGroups: string;
+    secondaryMuscleGroups?: string;
+    equipment: string;
+    formTips: string;
+    videoUrl?: string;
+    imageUrl?: string;
+  };
+}
+
+export interface WorkoutTemplateDetail extends WorkoutTemplate {
+  sections: WorkoutTemplateSection[];
+}
+
+// Workout Template API service
+export const workoutTemplateService = {
+  // Get all workout templates
+  getWorkoutTemplates: async (): Promise<WorkoutTemplate[]> => {
+    const response = await apiClient.get('/workouttemplates');
+    return response.data.templates;
+  },
+
+  // Get workout template by ID
+  getWorkoutTemplateById: async (id: number): Promise<WorkoutTemplateDetail> => {
+    const response = await apiClient.get(`/workouttemplates/${id}`);
+    return response.data;
+  },
+
+  // Get P90X workout templates
+  getP90XWorkoutTemplates: async (): Promise<WorkoutTemplate[]> => {
+    const response = await apiClient.get('/workouttemplates/p90x');
+    return response.data.templates;
+  },
+
+  // Get workout templates by category
+  getWorkoutTemplatesByCategory: async (category: string): Promise<WorkoutTemplate[]> => {
+    const response = await apiClient.get(`/workouttemplates/category/${category}`);
+    return response.data.templates;
+  },
+};
+
 export default workoutService;

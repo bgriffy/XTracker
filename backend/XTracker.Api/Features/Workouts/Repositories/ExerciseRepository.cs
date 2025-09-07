@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using XTracker.Api.Common.Data;
 using XTracker.Api.Features.Workouts.Models;
+using XTracker.Api.Features.Workouts.Models.Enums;
 
 namespace XTracker.Api.Features.Workouts.Repositories;
 
@@ -25,7 +26,7 @@ public class ExerciseRepository : IExerciseRepository
         return await _context.Exercises.FindAsync(id);
     }
 
-    public async Task<IEnumerable<Exercise>> GetByCategoryAsync(string category)
+    public async Task<IEnumerable<Exercise>> GetByCategoryAsync(ExerciseCategory category)
     {
         return await _context.Exercises
             .Where(e => e.Category == category)

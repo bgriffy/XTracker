@@ -24,6 +24,7 @@ public class WorkoutMappingProfile : Profile
             .ForMember(dest => dest.Id, opt => opt.Ignore())
             .ForMember(dest => dest.CreatedAt, opt => opt.Ignore())
             .ForMember(dest => dest.UpdatedAt, opt => opt.Ignore())
+            .ForMember(dest => dest.Date, opt => opt.MapFrom(src => DateTime.SpecifyKind(src.Date, DateTimeKind.Utc)))
             .ForMember(dest => dest.WorkoutExercises, opt => opt.MapFrom(src => src.Exercises));
 
         CreateMap<WorkoutExerciseCreateDto, WorkoutExercise>()
@@ -36,6 +37,7 @@ public class WorkoutMappingProfile : Profile
             .ForMember(dest => dest.Id, opt => opt.Ignore())
             .ForMember(dest => dest.CreatedAt, opt => opt.Ignore())
             .ForMember(dest => dest.UpdatedAt, opt => opt.Ignore())
+            .ForMember(dest => dest.Date, opt => opt.MapFrom(src => DateTime.SpecifyKind(src.Date, DateTimeKind.Utc)))
             .ForMember(dest => dest.WorkoutExercises, opt => opt.MapFrom(src => src.Exercises));
 
         CreateMap<WorkoutExerciseUpdateDto, WorkoutExercise>()

@@ -1,15 +1,41 @@
 ---
 description: Cursor rules for the XTracker project
-globs: **/*
+globs: ["**/*"]
 alwaysApply: true
+---
+
+---
+description: Cursor rules for the XTracker project (scoped, terse, enforceable)
+globs:
+  - backend/**/*
+  - frontend/**/*
+  - scripts/**/*
+alwaysApply: false
 ---
 
 # General Project Rules
 
 ## Terminal Commands
-- Always run commands with full path and command in the same line
-- Use format: `cd C:\Source\Repos\XTracker\[directory] && [command]`
-- When running the backend project, make sure you're in the correct directory: `cd backend/XTracker.Api && dotnet run`
+- Always run commands with **absolute paths** and as **single-line** statements.
+- Use this format:  
+  `cd C:\Source\Repos\XTracker\<directory> && <command>`
+
+## Run / Build Workflow (Windows, PowerShell)
+- **When asked to run the app, run the build script at this location from the project root:**
+```
+run command pwsh -ExecutionPolicy Bypass -File "scripts\build.ps1"
+```
+After running the command, wait five seconds and check output for any errors.
+
+> Notes:
+> - Do **not** split commands across lines.  
+> - Do **not** add delays or confirmations unless explicitly asked.  
+> - If a kill step fails because the process isn’t running, ignore (it’s already silenced).
+
+## One-off Backend Kill (anytime you need to stop it)
+- Preferred silent command:  
+  `taskkill /F /IM XTracker.Api.exe >$null 2>&1`
+
 
 ## Git 
  - Use the following when creating commit messages: 

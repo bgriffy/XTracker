@@ -1,0 +1,71 @@
+# Task ID: 4
+# Title: Setup Next.js Frontend with Tailwind
+# Status: done
+# Dependencies: None
+# Priority: high
+# Description: Initialize Next.js project with TypeScript, configure Tailwind CSS, and set up API client
+# Details:
+1. Create Next.js project using App Router
+2. Configure TypeScript
+3. Install and configure Tailwind CSS
+4. Set up Axios client for API communication
+5. Create basic layout components
+6. Configure environment variables
+
+# Test Strategy:
+1. Verify TypeScript compilation
+2. Test Tailwind configuration
+3. Unit test API client setup
+4. Test responsive layout components
+
+# Subtasks:
+## 1. Initialize Next.js project with TypeScript [done]
+### Dependencies: None
+### Description: Create a new Next.js project using the App Router architecture and configure TypeScript for type safety
+### Details:
+1. Use create-next-app to initialize a new project
+2. Select TypeScript during setup
+3. Choose App Router architecture
+4. Configure tsconfig.json with strict type checking
+5. Set up folder structure following Next.js 13+ conventions
+
+## 2. Install and configure Tailwind CSS [done]
+### Dependencies: 4.1
+### Description: Set up Tailwind CSS for styling with proper configuration for the Next.js project
+### Details:
+1. Install Tailwind CSS, PostCSS, and autoprefixer
+2. Create tailwind.config.js and postcss.config.js
+3. Configure content paths for Tailwind
+4. Set up global CSS file with Tailwind directives
+5. Create theme customizations for the fitness app
+
+## 3. Set up Axios client for API communication [done]
+### Dependencies: 4.1
+### Description: Configure Axios for making API requests to the backend with proper error handling and interceptors
+### Details:
+1. Install Axios package
+2. Create API client with base URL configuration
+3. Set up request/response interceptors
+4. Implement error handling middleware
+5. Create typed API service functions for workout endpoints
+
+## 4. Create basic layout components [done]
+### Dependencies: 4.2
+### Description: Develop reusable layout components that will be used throughout the application
+### Details:
+1. Create layout component with header, footer, and main content area
+2. Implement responsive navigation menu
+3. Design sidebar for workout categories
+4. Create loading and error state components
+5. Implement common UI components (buttons, cards, inputs)
+
+## 5. Configure environment variables and deployment setup [done]
+### Dependencies: 4.1, 4.3
+### Description: Set up environment configuration and prepare the application for different deployment environments
+### Details:
+1. Create .env.local file for local development
+2. Set up .env.example with required variables
+3. Configure API URL for different environments
+4. Set up Next.js config file with environment-specific settings
+5. Document environment setup process for team members
+

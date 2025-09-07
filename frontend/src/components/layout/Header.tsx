@@ -33,6 +33,12 @@ export default function Header() {
               Workouts
             </Link>
             <Link
+              href="/p90x"
+              className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
+            >
+              P90X Library
+            </Link>
+            <Link
               href="/schedule"
               className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
             >
@@ -89,6 +95,13 @@ export default function Header() {
                 onClick={() => setIsMenuOpen(false)}
               >
                 Workouts
+              </Link>
+              <Link
+                href="/p90x"
+                className="text-gray-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium transition-colors"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                P90X Library
               </Link>
               <Link
                 href="/schedule"

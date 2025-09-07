@@ -1,0 +1,119 @@
+# Task ID: 2
+# Title: Create Workout Domain Model and Database Schema
+# Status: completed
+# Dependencies: 1
+# Priority: high
+# Description: Implement the Workout entity model and create database migration for the core schema
+# Details:
+1. Create Workout entity with specified fields (id, date, type, durationMinutes, notes, reps, weight, timestamps)
+2. Configure Entity Framework mappings
+3. Create initial migration
+4. Add data annotations and validation
+5. Implement repository pattern for data access
+
+# Test Strategy:
+1. Unit tests for entity validation
+2. Integration tests for repository operations
+3. Verify migration applies successfully
+4. Test CRUD operations through repository
+
+# Subtasks:
+## 1. Create Workout Entity Model [pending]
+### Dependencies: None
+### Description: Create the core Workout entity with all required fields and data annotations
+### Details:
+1. Create Workout.cs in Features/Workouts/Models
+2. Add properties: Id (int), Date (DateTime), Type (string), DurationMinutes (int), Notes (string), Reps (int?), Weight (decimal?), CreatedAt (DateTime), UpdatedAt (DateTime)
+3. Add data annotations for validation
+4. Add navigation properties for future relationships
+
+## 2. Create Exercise Entity Model [pending]
+### Dependencies: None
+### Description: Create Exercise entity for tracking individual exercises within workouts
+### Details:
+1. Create Exercise.cs in Features/Workouts/Models
+2. Add properties: Id (int), Name (string), Description (string), Category (string), CreatedAt (DateTime)
+3. Add data annotations and validation
+4. Set up relationship with Workout entity
+
+## 3. Create WorkoutExercise Junction Entity [pending]
+### Dependencies: None
+### Description: Create junction table entity for many-to-many relationship between workouts and exercises
+### Details:
+1. Create WorkoutExercise.cs in Features/Workouts/Models
+2. Add properties: WorkoutId (int), ExerciseId (int), Sets (int), Reps (int), Weight (decimal?), Duration (int?), Notes (string)
+3. Configure composite key
+4. Set up navigation properties
+
+## 4. Configure Entity Framework Mappings [pending]
+### Dependencies: None
+### Description: Configure Entity Framework relationships and constraints in DbContext
+### Details:
+1. Update XTrackerDbContext.OnModelCreating method
+2. Configure Workout entity mapping
+3. Configure Exercise entity mapping
+4. Configure WorkoutExercise junction mapping
+5. Set up foreign key relationships
+6. Configure indexes for performance
+
+## 5. Add Data Annotations and Validation [pending]
+### Dependencies: None
+### Description: Implement comprehensive validation using data annotations and custom validation
+### Details:
+1. Add Required attributes to mandatory fields
+2. Add StringLength constraints
+3. Add Range validations for numeric fields
+4. Add custom validation attributes if needed
+5. Configure validation error messages
+
+## 6. Create Initial Database Migration [pending]
+### Dependencies: None
+### Description: Generate and configure the initial database migration
+### Details:
+1. Run 'dotnet ef migrations add InitialWorkoutSchema'
+2. Review generated migration file
+3. Verify table structure and relationships
+4. Add any custom migration logic if needed
+5. Test migration generation
+
+## 7. Implement Repository Pattern [pending]
+### Dependencies: None
+### Description: Create repository interfaces and implementations for data access
+### Details:
+1. Create IWorkoutRepository interface
+2. Create IExerciseRepository interface
+3. Create WorkoutRepository implementation
+4. Create ExerciseRepository implementation
+5. Register repositories in DI container
+6. Add basic CRUD operations
+
+## 8. Add Database Seeding [pending]
+### Dependencies: None
+### Description: Create seed data for exercises and initial workout types
+### Details:
+1. Create seed data for common exercises (push-ups, pull-ups, etc.)
+2. Create seed data for P90X workout types
+3. Implement seeding logic in DbContext
+4. Add seeding method to Program.cs
+5. Test seed data creation
+
+## 9. Test Database Schema and Operations [pending]
+### Dependencies: None
+### Description: Verify the database schema works correctly and test basic operations
+### Details:
+1. Apply migration to database
+2. Test entity creation and persistence
+3. Test relationship queries
+4. Test validation rules
+5. Verify seed data was created
+6. Test repository operations
+
+## 10. Update Health Check for Database [pending]
+### Dependencies: None
+### Description: Enhance health check endpoint to verify database schema
+### Details:
+1. Update HealthController to check for required tables
+2. Add schema validation logic
+3. Test health check with database
+4. Verify proper error handling for missing tables
+
