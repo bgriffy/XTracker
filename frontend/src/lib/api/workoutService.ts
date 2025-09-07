@@ -6,13 +6,13 @@ export interface Exercise {
   name: string;
   description?: string;
   category: string;
-  muscleGroups: string[];
+  createdAt: string;
 }
 
 export interface WorkoutExercise {
-  id: number;
   exerciseId: number;
-  exercise: Exercise;
+  exerciseName: string;
+  exerciseCategory: string;
   sets: number;
   reps: number;
   weight?: number;
@@ -22,32 +22,44 @@ export interface WorkoutExercise {
 
 export interface Workout {
   id: number;
-  name: string;
-  description?: string;
   date: string;
-  duration?: number; // in minutes
+  type: string;
+  durationMinutes: number;
   notes?: string;
-  exercises: WorkoutExercise[];
+  reps?: number;
+  weight?: number;
   createdAt: string;
   updatedAt: string;
+  exerciseCount: number; // Changed from exercises array to exerciseCount
 }
 
 export interface CreateWorkoutRequest {
-  name: string;
-  description?: string;
   date: string;
+  type: string;
+  durationMinutes: number;
+  notes?: string;
+  reps?: number;
+  weight?: number;
+  exercises?: CreateWorkoutExerciseRequest[];
+}
+
+export interface CreateWorkoutExerciseRequest {
+  exerciseId: number;
+  sets: number;
+  reps: number;
+  weight?: number;
   duration?: number;
   notes?: string;
-  exercises: Omit<WorkoutExercise, 'id' | 'exercise'>[];
 }
 
 export interface UpdateWorkoutRequest {
-  name?: string;
-  description?: string;
   date?: string;
-  duration?: number;
+  type?: string;
+  durationMinutes?: number;
   notes?: string;
-  exercises?: Omit<WorkoutExercise, 'id' | 'exercise'>[];
+  reps?: number;
+  weight?: number;
+  exercises?: CreateWorkoutExerciseRequest[];
 }
 
 // Workout API service
@@ -55,7 +67,7 @@ export const workoutService = {
   // Get all workouts
   getWorkouts: async (): Promise<Workout[]> => {
     const response = await apiClient.get('/workouts');
-    return response.data;
+    return response.data.workouts;
   },
 
   // Get workout by ID

@@ -9,3 +9,4 @@ alwaysApply: true
 ## Terminal Commands
 - Always run commands with full path and command in the same line
 - Use format: `cd C:\Source\Repos\XTracker\[directory] && [command]`
+- When running the backend project, make sure you're in the correct directory: `cd backend/XTracker.Api && dotnet run`
