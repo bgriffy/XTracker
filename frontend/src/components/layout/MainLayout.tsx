@@ -8,9 +8,10 @@ import Sidebar from './Sidebar';
 interface MainLayoutProps {
   children: React.ReactNode;
   showSidebar?: boolean;
+  showHeader?: boolean;
 }
 
-export default function MainLayout({ children, showSidebar = true }: MainLayoutProps) {
+export default function MainLayout({ children, showSidebar = true, showHeader = true }: MainLayoutProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const closeSidebar = () => {
@@ -20,7 +21,7 @@ export default function MainLayout({ children, showSidebar = true }: MainLayoutP
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <Header />
+      {showHeader && <Header />}
 
       <div className="flex">
         {/* Sidebar */}
@@ -29,7 +30,7 @@ export default function MainLayout({ children, showSidebar = true }: MainLayoutP
         )}
 
         {/* Main Content */}
-        <main className={`flex-1 ${showSidebar ? 'lg:ml-64' : ''}`}>
+        <main className="flex-1">
           <div className="min-h-screen">
             {children}
           </div>
