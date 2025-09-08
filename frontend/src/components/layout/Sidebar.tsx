@@ -12,7 +12,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
   const pathname = usePathname();
 
   const navigation = [
-    { name: 'P90X Library', href: '/p90x', icon: '🔥' },
+    { name: 'Workouts', href: '/workouts', icon: '🔥' },
     { name: 'History', href: '/workouts/history', icon: '📈' },
     { name: 'Schedule', href: '/schedule', icon: '📅' },
     { name: 'Statistics', href: '/stats', icon: '📊' },
